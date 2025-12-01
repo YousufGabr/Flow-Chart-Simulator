@@ -18,7 +18,9 @@ private:
 	// to be set in ReadActionParameters() then used in Execute()
 
 	Point Position;	//Position where the user clicks to add the stat.
-	//TODO: you should add LHS and RHS of the assignment statement as parameters
+	string LHS;	//Left Handside of the assignment (name of a variable)
+	double RHS; //Right Handside of the assignment (Value) 
+	//DONE: you should add LHS and RHS of the assignment statement as parameters
 
 public:
 	AddValueAssign(ApplicationManager *pAppManager);

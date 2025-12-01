@@ -11,6 +11,7 @@ class Statement
 {
 protected:
 	int ID;			//Each Statement has an ID --> must be unique
+	int NextID = 1; //Static variable to assign unique IDs to each statement
 	string Text;	//Statement text (e.g.  "X = 5" OR "salary > 3000" and so on)
 	bool Selected;	//true if the statement is selected on the folwchart
 

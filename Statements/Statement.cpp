@@ -2,7 +2,8 @@
 
 Statement::Statement()	
 { 
-	//TODO: set the ID with a unique value
+	//DONE: set the ID with a unique value
+	ID = NextID++;
 	Text = "";
 	Selected = false;		
 }
