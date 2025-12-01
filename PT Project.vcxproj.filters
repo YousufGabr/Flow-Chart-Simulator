@@ -161,6 +161,48 @@
     <ClCompile Include="Actions\AddVarAssign.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\AddOpAssign.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddDeclare.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddStart.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddEnd.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddWrite.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddRead.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddCondition.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\End.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\OpAssign.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Start.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Write.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Read.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Condition.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Declare.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
@@ -257,6 +299,48 @@
     </ClInclude>
     <ClInclude Include="Actions\AddVarAssign.h">
       <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddOpAssign.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddDeclare.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddStart.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddEnd.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddWrite.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddRead.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddCondition.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\End.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\OpAssign.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\Start.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\Read.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\Write.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\Condition.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\Declare.h">
+      <Filter>Statements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

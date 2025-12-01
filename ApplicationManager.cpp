@@ -1,6 +1,13 @@
 #include "ApplicationManager.h"
 #include "Actions\AddValueAssign.h"
 #include "Actions\AddVarAssign.h"
+#include "Actions\AddOpAssign.h"
+#include "Actions\AddDeclare.h"
+#include "Actions\AddCondition.h"
+#include "Actions\AddStart.h"
+#include "Actions\AddEnd.h"
+#include "Actions\AddRead.h"
+#include "Actions\AddWrite.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
