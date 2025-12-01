@@ -22,19 +22,12 @@
   <Class Name="AddValueAssign" Collapsed="true">
     <Position X="4.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACQgAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAACQgAAQAAQQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Actions\AddValueAssign.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ApplicationManager" Collapsed="true">
     <Position X="4.25" Y="0.5" Width="1.75" />
-    <NestedTypes>
-      <Enum Name="ApplicationManager::__unnamed_enum_0005_1" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ApplicationManager.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <AssociationLine Name="StatList" Type="Statement" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="4.25" Y="0.547" />
@@ -50,7 +43,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AZAAKAIAAIQAWAgAAAAAEAEAAUAAAAAAAAAAABAAAiA=</HashCode>
+      <HashCode>AZAAKAIAAYQAWAgAAAAAEAEAAUAQBAAAAAAAABAAAiA=</HashCode>
       <FileName>ApplicationManager.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -83,7 +76,7 @@
   <Class Name="Input" Collapsed="true">
     <Position X="6.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAABIAQAAAAAAEAABAAAEAAAAAAAAAAAAAAAgAA=</HashCode>
+      <HashCode>AAAAAAABIAQAAAAAAEACBAAAEAAAAAAAAAAAAAAAwAA=</HashCode>
       <FileName>GUI\Input.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -100,7 +93,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAADAAAUAAAAAAAAIAEAAAAAAQAQQAAAAIAgAgAA=</HashCode>
+      <HashCode>AIAAAADAABUAIIAAAAAIgEAAAAAAQAQQCBAAIBgAgAg=</HashCode>
       <FileName>GUI\Output.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
