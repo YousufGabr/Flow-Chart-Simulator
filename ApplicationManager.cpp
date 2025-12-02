@@ -8,6 +8,7 @@
 #include "Actions\AddEnd.h"
 #include "Actions\AddRead.h"
 #include "Actions\AddWrite.h"
+#include "Actions\Select.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -95,7 +96,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 			// --- EDITING / MANIPULATION ---
 		case SELECT:
-			pOut->PrintMessage("Action: SELECT a statement or connector, Click anywhere");
+			pAct = new Select(this);
 			break;
 
 		case EDIT_STAT:
@@ -221,7 +222,11 @@ Statement *ApplicationManager::GetStatement(Point P) const
 {
 	//If this point P(x,y) belongs to a statement return a pointer to it.
 	//otherwise, return NULL
-
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i]->ifclicked(P))
+			return StatList[i];
+	}
+	return NULL;
 
 	///Add your code here to search for a statement given a point P(x,y)	
 	///WITHOUT breaking class responsibilities

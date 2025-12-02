@@ -26,7 +26,7 @@ public:
 	bool IsSelected() const;
 
 	virtual void Draw(Output* pOut) const  = 0 ;	//Draw the statement
-	
+	virtual bool ifclicked(Point P) const = 0; //check if the statement is clicked
 	
 
 	///TODO:The following functions should be supported by the Statement class

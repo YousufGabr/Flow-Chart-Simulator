@@ -43,6 +43,16 @@ void VarAssign::Draw(Output* pOut) const
 
 }
 
+bool VarAssign::ifclicked(Point P) const
+{
+	//Check if point P is inside the statement block
+	if (P.x >= LeftCorner.x && P.x <= LeftCorner.x + UI.ASSGN_WDTH &&
+		P.y >= LeftCorner.y && P.y <= LeftCorner.y + UI.ASSGN_HI)
+		return true;
+	else
+		return false;
+}
+
 
 //This function should be called when LHS or RHS changes
 void VarAssign::UpdateStatementText()

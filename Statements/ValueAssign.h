@@ -36,6 +36,7 @@ public:
 	void setRHS(double R);
 
 	virtual void Draw(Output* pOut) const;
+	virtual bool ifclicked(Point P) const;
 
 };
 

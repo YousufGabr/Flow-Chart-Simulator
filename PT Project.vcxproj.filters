@@ -203,6 +203,9 @@
     <ClCompile Include="Statements\Declare.cpp">
       <Filter>Statements</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\Select.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
@@ -341,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="Statements\Declare.h">
       <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Select.h">
+      <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
