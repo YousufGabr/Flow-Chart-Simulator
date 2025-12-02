@@ -24,7 +24,7 @@ void Start::Draw(Output* pOut) const
 bool Start::ifclicked(Point P) const
 {
 	//Check if point P is inside the statement block
-	if (P.x >= LeftCorner.x && P.x <= LeftCorner.x + UI.ASSGN_WDTH &&
+	if (P.x >= LeftCorner.x && P.x <= LeftCorner.x + 100 &&
 		P.y >= LeftCorner.y && P.y <= LeftCorner.y + UI.ASSGN_HI)
 		return true;
 	else
