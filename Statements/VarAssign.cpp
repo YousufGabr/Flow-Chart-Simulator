@@ -5,8 +5,8 @@ using namespace std;
 
 VarAssign::VarAssign(Point Lcorner, string LeftHS, string RightHS)
 {
-	// Note: The LeftHS and RightHS should be validated inside (AddValueAssign) action
-	//       before passing it to the constructor of ValueAssign
+	// Note: The LeftHS and RightHS should be validated inside (AddVarAssign) action
+	//       before passing it to the constructor of VarAssign
 	LHS = LeftHS;
 	RHS = RightHS;
 

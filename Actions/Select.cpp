@@ -15,9 +15,10 @@ void Select::ReadActionParameters() {
 	Point p;
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-	pOut->PrintMessage("Click to Select a statement or connector");
+	pOut->PrintMessage("Click to Select/Unselect a statement or connector");
 	pIn->GetPointClicked(p);
 	ptr = pManager->GetStatement(p);
+	pOut->ClearStatusBar();
 }
 
 void Select::Execute() {

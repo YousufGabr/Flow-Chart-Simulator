@@ -54,15 +54,15 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	{
 			// --- ADD STATEMENTS ---
 		case ADD_START:
-			pOut->PrintMessage("Action: add START statement, Click anywhere");
+			pAct = new AddStart(this);
 			break;
 
 		case ADD_END:
-			pOut->PrintMessage("Action: add END statement, Click anywhere");
+			pAct = new AddEnd(this);
 			break;
 
 		case ADD_DECLARE_VARIABLE:
-			pOut->PrintMessage("Action: add DECLARE VARIABLE statement, Click anywhere");
+			pAct = new AddDeclare(this);
 			break;
 
 		case ADD_VALUE_ASSIGN:
@@ -82,11 +82,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case ADD_READ:
-			pOut->PrintMessage("Action: add READ (input) statement, Click anywhere");
+			pAct = new AddRead(this);
 			break;
 
 		case ADD_WRITE:
-			pOut->PrintMessage("Action: add WRITE (output) statement, Click anywhere");
+			pAct = new AddWrite(this);
 			break;
 
 		case ADD_CONNECTOR:

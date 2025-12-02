@@ -1,1 +1,34 @@
 #include "Start.h"
+#include <sstream>
+
+using namespace std;
+
+Start::Start(Point Lcorner)
+{
+
+	LeftCorner = Lcorner;
+
+	pOutConn = NULL;	//No connectors yet
+
+	Outlet.x = LeftCorner.x + 50;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+}
+
+void Start::Draw(Output* pOut) const
+{
+	//Call Output::DrawStart function to draw Start statement 	
+	pOut->DrawStart(LeftCorner, 100, UI.ASSGN_HI,Selected);
+
+}
+
+bool Start::ifclicked(Point P) const
+{
+	//Check if point P is inside the statement block
+	if (P.x >= LeftCorner.x && P.x <= LeftCorner.x + UI.ASSGN_WDTH &&
+		P.y >= LeftCorner.y && P.y <= LeftCorner.y + UI.ASSGN_HI)
+		return true;
+	else
+		return false;
+}
+void Start::UpdateStatementText() {}
+

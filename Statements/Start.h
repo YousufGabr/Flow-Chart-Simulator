@@ -2,5 +2,18 @@
 #include "Statement.h"
 class Start : public Statement
 {
+private:
+	Connector* pOutConn;
+	Point Outlet;	//A point a connection leaves this statement
+
+	Point LeftCorner;	//left corenr of the statement block.
+
+	virtual void UpdateStatementText();
+
+public:
+	Start(Point Lcorner);
+
+	virtual void Draw(Output* pOut) const;
+	virtual bool ifclicked(Point P) const;
 };
 
