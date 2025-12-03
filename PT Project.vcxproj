@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actions\AddCondition.cpp" />
+    <ClCompile Include="Actions\AddConnect.cpp" />
     <ClCompile Include="Actions\AddDeclare.cpp" />
     <ClCompile Include="Actions\AddEnd.cpp" />
     <ClCompile Include="Actions\AddOpAssign.cpp" />
@@ -300,6 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actions\AddCondition.h" />
+    <ClInclude Include="Actions\AddConnect.h" />
     <ClInclude Include="Actions\AddDeclare.h" />
     <ClInclude Include="Actions\AddEnd.h" />
     <ClInclude Include="Actions\AddOpAssign.h" />

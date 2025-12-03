@@ -44,6 +44,15 @@ bool Write::ifclicked(Point P) const
 		return false;
 }
 
+Point Write::GetInlet() const
+{
+	return Inlet;
+}
+Point Write::GetOutlet() const
+{
+	return Outlet;
+}
+
 
 //This function should be called when Variable changes
 void Write::UpdateStatementText()

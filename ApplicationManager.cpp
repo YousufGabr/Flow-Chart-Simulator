@@ -9,6 +9,7 @@
 #include "Actions\AddRead.h"
 #include "Actions\AddWrite.h"
 #include "Actions\Select.h"
+#include "Actions\AddConnect.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -22,6 +23,7 @@ ApplicationManager::ApplicationManager()
 	StatCount = 0;
 	ConnCount = 0;
 	pSelectedStat = NULL;	//no Statement is selected yet
+	pSelectedConn = NULL;	//no Connector is selected yet
 	pClipboard = NULL;
 	
 	//Create an array of Statement pointers and set them to NULL		
@@ -90,7 +92,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case ADD_CONNECTOR:
-			pOut->PrintMessage("Action: add CONNECTOR, Click on source then destination");
+			pAct = new AddConnect(this);
 			break;
 
 
@@ -227,11 +229,6 @@ Statement *ApplicationManager::GetStatement(Point P) const
 			return StatList[i];
 	}
 	return NULL;
-
-	///Add your code here to search for a statement given a point P(x,y)	
-	///WITHOUT breaking class responsibilities
-
-	return NULL;
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the selected statement
@@ -252,6 +249,44 @@ Statement *ApplicationManager::GetClipboard() const
 //Set the Clipboard
 void ApplicationManager::SetClipboard(Statement *pStat)
 {	pClipboard = pStat;	}
+
+
+//==================================================================================//
+//						Connectors Management Functions								//
+//==================================================================================//
+
+
+//Add a statement to the list of Connectors
+void ApplicationManager::AddConnector(Connector* pConn)
+{
+	if (ConnCount < MaxCount)
+		ConnList[ConnCount++] = pConn;
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+Connector* ApplicationManager::GetConnector(Point P) const
+{
+	//If this point P(x,y) belongs to a statement return a pointer to it.
+	//otherwise, return NULL
+	for (int i = 0; i < ConnCount; i++) {
+		if (ConnList[i]->ifclicked(P))
+			return ConnList[i];
+	}
+	return NULL;
+}
+////////////////////////////////////////////////////////////////////////////////////
+//Returns the selected Connector
+Connector* ApplicationManager::GetSelectedConnector() const
+{
+	return pSelectedConn;
+}
+////////////////////////////////////////////////////////////////////////////////////
+//Set the Connector selected by the user
+void ApplicationManager::SetSelectedConnector(Connector* pCon)
+{
+	pSelectedConn = pCon;
+}
 
 
 //==================================================================================//

@@ -30,5 +30,16 @@ bool Start::ifclicked(Point P) const
 	else
 		return false;
 }
+
+Point Start::GetInlet() const
+{
+	//Start statement has no inlet
+	return Point(-1, -1);
+}
+Point Start::GetOutlet() const
+{
+	return Outlet;
+}
+
 void Start::UpdateStatementText() {}
 

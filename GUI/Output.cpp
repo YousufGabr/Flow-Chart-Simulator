@@ -293,9 +293,9 @@ void Output::DrawConnector(Point start, Point end, bool Selected)
 
 	if (end.y < start.y)
 	{
-		pWind->DrawLine(start.x, start.y, start.x - 50, start.y);
-		pWind->DrawLine(start.x - 50, start.y, start.x - 50, end.y);
-		pWind->DrawLine(start.x - 50, end.y, end.x, end.y);
+		pWind->DrawLine(start.x, start.y, start.x - 100, start.y);
+		pWind->DrawLine(start.x - 100, start.y, start.x - 100, end.y);
+		pWind->DrawLine(start.x - 100, end.y, end.x, end.y);
 		pWind->DrawTriangle(end.x, end.y + 5, end.x, end.y -5, end.x + 10 , end.y);
 		return;
 	}

@@ -12,8 +12,12 @@ private:
 	Statement *DstStat;	//The destination statement of the connector
 	Point Start;	//Start point of the connector
 	Point End;		//End point of the connector
+	bool Selected; //true if the connector is selected
 public:
 	Connector(Statement* Src, Statement* Dst);
+
+	void SetSelected(bool s);
+	bool IsSelected() const;
 
 	void		setSrcStat(Statement *Src);
 	Statement*	getSrcStat();	
@@ -25,6 +29,7 @@ public:
 
 	void setEndPoint(Point P);
 	Point getEndPoint();
+	bool ifclicked(Point P) const; //check if the connector is clicked
 
 	void Draw(Output* pOut) const;
 	

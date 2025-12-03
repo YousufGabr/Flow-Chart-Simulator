@@ -18,12 +18,18 @@ void Select::ReadActionParameters() {
 	pOut->PrintMessage("Click to Select/Unselect a statement or connector");
 	pIn->GetPointClicked(p);
 	ptr = pManager->GetStatement(p);
+	con = pManager->GetConnector(p);
 	pOut->ClearStatusBar();
 }
 
 void Select::Execute() {
 	ReadActionParameters();
 	if (ptr != NULL) {
+		if (pManager->GetSelectedConnector() != NULL)
+		{
+			pManager->GetSelectedConnector()->SetSelected(false);
+			pManager->SetSelectedConnector(NULL);
+		}
 		if (ptr->IsSelected()) {
 			ptr->SetSelected(false);
 			pManager->SetSelectedStatement(NULL);
@@ -37,4 +43,24 @@ void Select::Execute() {
 			pManager->SetSelectedStatement(ptr);
 		}
 	}
+	else if (con != NULL) {
+		if (pManager->GetSelectedStatement() != NULL)
+		{
+			pManager->GetSelectedStatement()->SetSelected(false);
+			pManager->SetSelectedStatement(NULL);
+		}
+		if (con->IsSelected()) {
+			con->SetSelected(false);
+			pManager->SetSelectedConnector(NULL);
+		}
+		else {
+			if (pManager->GetSelectedConnector() != NULL)
+			{
+				pManager->GetSelectedConnector()->SetSelected(false);
+			}
+			con->SetSelected(true);
+			pManager->SetSelectedConnector(con);
+		}
+	}
+
 }

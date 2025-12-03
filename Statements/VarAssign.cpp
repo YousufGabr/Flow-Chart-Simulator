@@ -53,6 +53,15 @@ bool VarAssign::ifclicked(Point P) const
 		return false;
 }
 
+Point VarAssign::GetInlet() const
+{
+	return Inlet;
+}
+Point VarAssign::GetOutlet() const
+{
+	return Outlet;
+}
+
 
 //This function should be called when LHS or RHS changes
 void VarAssign::UpdateStatementText()

@@ -44,6 +44,15 @@ bool Read::ifclicked(Point P) const
 		return false;
 }
 
+Point Read::GetInlet() const
+{
+	return Inlet;
+}
+Point Read::GetOutlet() const
+{
+	return Outlet;
+}
+
 
 //This function should be called when Variable changes
 void Read::UpdateStatementText()

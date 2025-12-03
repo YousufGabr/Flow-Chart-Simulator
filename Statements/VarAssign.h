@@ -27,6 +27,8 @@ public:
 
 	virtual void Draw(Output* pOut) const;
 	virtual bool ifclicked(Point P) const;
+	virtual Point GetInlet() const;
+	virtual Point GetOutlet() const;
 
 };
 

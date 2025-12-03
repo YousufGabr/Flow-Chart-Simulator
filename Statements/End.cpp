@@ -30,6 +30,17 @@ bool End::ifclicked(Point P) const
 	else
 		return false;
 }
+
+Point End::GetInlet() const
+{
+	return Inlet;
+}
+Point End::GetOutlet() const
+{
+	//End statement has no outlet
+	return Point(-1, -1);
+}
+
 void End::UpdateStatementText() {}
 
 

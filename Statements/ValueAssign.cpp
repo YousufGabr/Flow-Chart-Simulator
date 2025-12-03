@@ -53,6 +53,15 @@ bool ValueAssign::ifclicked(Point P) const
 		return false;
 }
 
+Point ValueAssign::GetInlet() const
+{
+	return Inlet;
+}
+Point ValueAssign::GetOutlet() const
+{
+	return Outlet;
+}
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()

@@ -46,6 +46,15 @@ bool Declare::ifclicked(Point P) const
 		return false;
 }
 
+Point Declare::GetInlet() const
+{
+	return Inlet;
+}
+Point Declare::GetOutlet() const
+{
+	return Outlet;
+}
+
 
 //This function should be called when Variable changes
 void Declare::UpdateStatementText()
