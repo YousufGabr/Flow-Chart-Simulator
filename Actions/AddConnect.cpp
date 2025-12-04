@@ -60,6 +60,13 @@ void AddConnect::ReadActionParameters()
 		dst = NULL;
 		return;
 	}
+	if(src==dst)
+	{
+		pOut->PrintMessage("Aborted: Source and Destination Statements Can't Be The Same");
+		src = NULL;
+		dst = NULL;
+		return;
+	}
 	
 	pOut->ClearStatusBar();
 }

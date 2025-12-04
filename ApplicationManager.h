@@ -40,11 +40,13 @@ public:
 	
 	// == Statements/Connector Management Functions ==
 	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart
+	void RemoveStatement(Statement* pStat); //Removes a Statement from the Flowchart
 	Statement *GetStatement(Point P) const;	//Searches for a statement where point P belongs
 	                                        //TODO: Complete its implementation 
 	                                        //      WITHOUT breaking class responsibilities
 
 	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
+	void RemoveConnector(Connector* pConn); //Removes a Connector from the Flowchart
 	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs
 
 	// Note: you should use the following 4 functions 

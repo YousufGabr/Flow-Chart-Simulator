@@ -1,17 +1,15 @@
 #pragma once
 #include "Action.h"
 #include "..\Statements\Statement.h"
-class Select : public Action
+class Delete : public Action
 {
 private:
-	Statement* stat;
-	Point p;
-	Connector* con;
+	Statement* selectedstat;
+	Connector* selectedcon;
 
 public:
-	Select(ApplicationManager *pAppManager);
+	Delete(ApplicationManager* pAppManager);
 	virtual void ReadActionParameters();
 	virtual void Execute();
-
 };
 

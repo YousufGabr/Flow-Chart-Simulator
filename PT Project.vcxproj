@@ -133,6 +133,7 @@
     <ClCompile Include="Actions\AddStart.cpp" />
     <ClCompile Include="Actions\AddVarAssign.cpp" />
     <ClCompile Include="Actions\AddWrite.cpp" />
+    <ClCompile Include="Actions\Delete.cpp" />
     <ClCompile Include="Actions\Select.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -309,6 +310,7 @@
     <ClInclude Include="Actions\AddStart.h" />
     <ClInclude Include="Actions\AddVarAssign.h" />
     <ClInclude Include="Actions\AddWrite.h" />
+    <ClInclude Include="Actions\Delete.h" />
     <ClInclude Include="Actions\Select.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

@@ -8,8 +8,9 @@
 #include "Actions\AddEnd.h"
 #include "Actions\AddRead.h"
 #include "Actions\AddWrite.h"
-#include "Actions\Select.h"
 #include "Actions\AddConnect.h"
+#include "Actions\Select.h"
+#include "Actions\Delete.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -106,7 +107,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case DEL:
-			pOut->PrintMessage("Action: DELETE selected figure");
+			pAct = new Delete(this);
 			break;
 
 		case COPY:
@@ -219,6 +220,30 @@ void ApplicationManager::AddStatement(Statement *pStat)
 	
 }
 
+void ApplicationManager::RemoveStatement(Statement* pStat)
+{
+	//Find and remove the statement from the list
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i] == pStat) {
+			//Shift the remaining statements to fill the gap
+			for (int j = i; j < StatCount - 1; j++) {
+				StatList[j] = StatList[j + 1];
+			}
+			StatList[StatCount - 1] = NULL; // Optional: Clear the last pointer
+			StatCount--;
+			delete pStat; // Free the memory allocated for the statement
+			//delete corresponding connectors if any
+			for (int k = 0; k < ConnCount; k++) {
+				if (ConnList[k]->getSrcStat() == pStat || ConnList[k]->getDstStat() == pStat) {
+					RemoveConnector(ConnList[k]);
+					k--; // Adjust index after removal
+				}
+			}
+			return;
+		}
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
 Statement *ApplicationManager::GetStatement(Point P) const
 {
@@ -262,6 +287,23 @@ void ApplicationManager::AddConnector(Connector* pConn)
 	if (ConnCount < MaxCount)
 		ConnList[ConnCount++] = pConn;
 
+}
+
+void ApplicationManager::RemoveConnector(Connector* pConn)
+{
+	//Find and remove the connector from the list
+	for (int i = 0; i < ConnCount; i++) {
+		if (ConnList[i] == pConn) {
+			//Shift the remaining connectors to fill the gap
+			for (int j = i; j < ConnCount - 1; j++) {
+				ConnList[j] = ConnList[j + 1];
+			}
+			ConnList[ConnCount - 1] = NULL; // Optional: Clear the last pointer
+			ConnCount--;
+			delete pConn; // Free the memory allocated for the connector
+			return;
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
