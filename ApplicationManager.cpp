@@ -11,6 +11,7 @@
 #include "Actions\AddConnect.h"
 #include "Actions\Select.h"
 #include "Actions\Delete.h"
+#include "Actions\Copy.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -111,7 +112,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case COPY:
-			pOut->PrintMessage("Action: COPY selected figure");
+			pAct = new Copy(this);
 			break;
 
 		case CUT:
