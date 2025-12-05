@@ -25,6 +25,7 @@ void Cut::Execute() {
 		pOut->PrintMessage("No Statement is Selected to Cut");
 		return;
 	}
+	pManager->SetSelectedStatement(NULL);
 	pManager->SetClipboard(cutstat);
 	pManager->RemoveStatement(cutstat);
 	pManager->setIscut(true);

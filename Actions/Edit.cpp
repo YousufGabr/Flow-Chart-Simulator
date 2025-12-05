@@ -1,5 +1,7 @@
 #include "Edit.h"
 #include "..\ApplicationManager.h"
+#include "..\Statements\Start.h"
+#include "..\Statements\End.h"
 
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
@@ -23,6 +25,16 @@ void Edit::Execute() {
 	if (Editstat == NULL)
 	{
 		pOut->PrintMessage("No Statement is Selected to Edit");
+		return;
+	}
+	if (dynamic_cast <Start*>(Editstat))
+	{
+		pOut->PrintMessage("Cannot Edit Start Statement");
+		return;
+	}
+	if (dynamic_cast <End*>(Editstat))
+	{
+		pOut->PrintMessage("Cannot Edit End Statement");
 		return;
 	}
 	Editstat->Edit(pManager);

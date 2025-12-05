@@ -86,8 +86,9 @@ void Paste::Execute() {
 		Corner.y = p.y;
 		newstat = new Declare(Corner, SRHS);
 	}
-	pManager->SetSelectedStatement(NULL);
+	
 	if (cut) {
+		pManager->SetSelectedStatement(NULL);
 		pManager->setIscut(false);
 		delete copiedstat;
 		pManager->SetClipboard(newstat);

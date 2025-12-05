@@ -26,6 +26,8 @@ void Delete::Execute() {
 		pOut->PrintMessage("No Statement or Connector is Selected to Delete");
 	}
 	else if (selectedstat != NULL) {
+		if(selectedstat == pManager->GetClipboard())
+			pManager->SetClipboard(NULL);
 		pManager->RemoveStatement(selectedstat);
 		delete selectedstat;
 		pManager->SetSelectedStatement(NULL);
