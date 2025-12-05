@@ -53,6 +53,11 @@ Point Read::GetOutlet() const
 	return Outlet;
 }
 
+void Read::getdata(string& lhs, string& op, string& srhs, double& drhs)
+{
+	srhs = Variable;
+}
+
 
 //This function should be called when Variable changes
 void Read::UpdateStatementText()

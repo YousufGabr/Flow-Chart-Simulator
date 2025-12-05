@@ -27,6 +27,7 @@ void Delete::Execute() {
 	}
 	else if (selectedstat != NULL) {
 		pManager->RemoveStatement(selectedstat);
+		delete selectedstat;
 		pManager->SetSelectedStatement(NULL);
 		pOut->PrintMessage("Statement and Its Connectors Deleted Successfully");
 	}

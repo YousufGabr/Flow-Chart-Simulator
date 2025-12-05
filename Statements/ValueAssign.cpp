@@ -62,6 +62,12 @@ Point ValueAssign::GetOutlet() const
 	return Outlet;
 }
 
+void ValueAssign::getdata(string& lhs, string& op, string& srhs, double& drhs)
+{
+	lhs = LHS;
+	drhs = RHS;
+}
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()

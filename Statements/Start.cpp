@@ -41,5 +41,10 @@ Point Start::GetOutlet() const
 	return Outlet;
 }
 
+void Start::getdata(string& lhs, string& op, string& srhs, double& drhs)
+{
+	//Start statement has no data
+}
+
 void Start::UpdateStatementText() {}
 

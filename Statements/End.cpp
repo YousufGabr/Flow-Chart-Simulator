@@ -41,6 +41,11 @@ Point End::GetOutlet() const
 	return Point(-1, -1);
 }
 
+void End::getdata(string& lhs, string& op, string& srhs, double& drhs)
+{
+	//End statement has no data
+}
+
 void End::UpdateStatementText() {}
 
 

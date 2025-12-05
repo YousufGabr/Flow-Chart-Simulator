@@ -12,6 +12,8 @@
 #include "Actions\Select.h"
 #include "Actions\Delete.h"
 #include "Actions\Copy.h"
+#include "Actions\Cut.h"
+#include "Actions\Paste.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -24,6 +26,7 @@ ApplicationManager::ApplicationManager()
 	
 	StatCount = 0;
 	ConnCount = 0;
+	iscut = false;
 	pSelectedStat = NULL;	//no Statement is selected yet
 	pSelectedConn = NULL;	//no Connector is selected yet
 	pClipboard = NULL;
@@ -116,11 +119,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case CUT:
-			pOut->PrintMessage("Action: CUT selected figure");
+			pAct = new Cut(this);
 			break;
 
 		case PASTE:
-			pOut->PrintMessage("Action: PASTE copied/cut figure, Click anywhere");
+			pAct = new Paste(this);
 			break;
 
 			// --- UNDO / REDO ---
@@ -232,7 +235,6 @@ void ApplicationManager::RemoveStatement(Statement* pStat)
 			}
 			StatList[StatCount - 1] = NULL; // Optional: Clear the last pointer
 			StatCount--;
-			delete pStat; // Free the memory allocated for the statement
 			//delete corresponding connectors if any
 			for (int k = 0; k < ConnCount; k++) {
 				if (ConnList[k]->getSrcStat() == pStat || ConnList[k]->getDstStat() == pStat) {
@@ -243,6 +245,15 @@ void ApplicationManager::RemoveStatement(Statement* pStat)
 			return;
 		}
 	}
+}
+
+bool ApplicationManager::getIscut() const
+{
+	return iscut;
+}
+void ApplicationManager::setIscut(bool c)
+{
+	iscut = c;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

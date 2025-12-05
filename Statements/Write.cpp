@@ -53,6 +53,11 @@ Point Write::GetOutlet() const
 	return Outlet;
 }
 
+void Write::getdata(string& lhs, string& op, string& srhs, double& drhs)
+{
+	srhs = Variable;
+}
+
 
 //This function should be called when Variable changes
 void Write::UpdateStatementText()

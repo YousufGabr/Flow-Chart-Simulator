@@ -29,6 +29,7 @@ public:
 	virtual bool ifclicked(Point P) const = 0; //check if the statement is clicked
 	virtual Point GetInlet() const = 0;	//returns the inlet point of the statement
 	virtual Point GetOutlet() const = 0;	//returns the outlet point of the statement
+	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs)=0; //get the statement data from the user
 	
 
 	///TODO:The following functions should be supported by the Statement class

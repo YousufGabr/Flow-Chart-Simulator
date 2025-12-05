@@ -16,6 +16,7 @@ class ApplicationManager
 private:
 	int StatCount;		//Actual number of statements
 	int ConnCount;		//Actual number of connectors
+	bool iscut;	 //flag to check if the operation is cut
 	Statement* StatList[MaxCount];	//List of all statements (Array of pointers)
 	Connector* ConnList[MaxCount];	//List of all connectors (Array of pointers)
 
@@ -41,6 +42,8 @@ public:
 	// == Statements/Connector Management Functions ==
 	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart
 	void RemoveStatement(Statement* pStat); //Removes a Statement from the Flowchart
+	bool getIscut() const;               //Returns the iscut flag
+	void setIscut(bool c);              //Sets the iscut flag
 	Statement *GetStatement(Point P) const;	//Searches for a statement where point P belongs
 	                                        //TODO: Complete its implementation 
 	                                        //      WITHOUT breaking class responsibilities

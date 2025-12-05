@@ -29,6 +29,7 @@ public:
 	virtual bool ifclicked(Point P) const;
 	virtual Point GetInlet() const;
 	virtual Point GetOutlet() const;
+	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs);
 
 };
 
