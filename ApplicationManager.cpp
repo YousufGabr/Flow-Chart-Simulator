@@ -10,6 +10,7 @@
 #include "Actions\AddWrite.h"
 #include "Actions\AddConnect.h"
 #include "Actions\Select.h"
+#include "Actions\Edit.h"
 #include "Actions\Delete.h"
 #include "Actions\Copy.h"
 #include "Actions\Cut.h"
@@ -107,7 +108,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case EDIT_STAT:
-			pOut->PrintMessage("Action: EDIT selected statement, Click anywhere");
+			pAct = new Edit(this);
 			break;
 
 		case DEL:
@@ -379,6 +380,7 @@ ApplicationManager::~ApplicationManager()
 		delete StatList[i];
 	for(int i=0; i<ConnCount; i++)
 		delete ConnList[i];
+	if (iscut && pClipboard != NULL) delete pClipboard;
 	delete pIn;
 	delete pOut;
 	

@@ -5,6 +5,7 @@ class Paste : public Action
 {
 private:
 	Statement* copiedstat;
+	Statement* newstat;
 	Point p,Corner;
 	string LHS,SRHS,OP;
 	double DRHS;

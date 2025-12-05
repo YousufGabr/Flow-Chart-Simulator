@@ -47,87 +47,51 @@ void Paste::Execute() {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - UI.ASSGN_WDTH / 2;
 		Corner.y = p.y;
-		ValueAssign* pAssign = new ValueAssign(Corner, LHS, DRHS);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pAssign);
-		}
-		pManager->AddStatement(pAssign); // Adds the created statement to application manger's statement list
+		newstat = new ValueAssign(Corner, LHS, DRHS);
 	}
 	else if (dynamic_cast <VarAssign*>(copiedstat)) {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - UI.ASSGN_WDTH / 2;
 		Corner.y = p.y;
-		VarAssign* pAssign = new VarAssign(Corner, LHS, SRHS);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pAssign);
-		}
-		pManager->AddStatement(pAssign); // Adds the created statement to application manger's statement list
+		newstat = new VarAssign(Corner, LHS, SRHS);
+		
 	}
 	else if (dynamic_cast <Start*>(copiedstat)) {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - 50;
 		Corner.y = p.y;
-		Start* pStart = new Start(Corner);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pStart);
-		}
-		pManager->AddStatement(pStart); // Adds the created statement to application manger's statement list
+		newstat = new Start(Corner);
 	}
 	else if (dynamic_cast <End*>(copiedstat)) {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - 50;
 		Corner.y = p.y;
-		End* pEnd = new End(Corner);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pEnd);
-		}
-		pManager->AddStatement(pEnd); // Adds the created statement to application manger's statement list
+		newstat = new End(Corner);
 	}
 	else if (dynamic_cast <Read*>(copiedstat)) {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - UI.ASSGN_WDTH / 2;
 		Corner.y = p.y;
-		Read* pRead = new Read(Corner, SRHS);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pRead);
-		}
-		pManager->AddStatement(pRead); // Adds the created statement to application manger's statement list
+		newstat = new Read(Corner, SRHS);
 	}
 	else if (dynamic_cast <Write*>(copiedstat)) {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - UI.ASSGN_WDTH / 2;
 		Corner.y = p.y;
-		Write* pWrite = new Write(Corner, SRHS);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pWrite);
-		}
-		pManager->AddStatement(pWrite); // Adds the created statement to application manger's statement list
+		newstat = new Write(Corner, SRHS);
 	}
 	else if (dynamic_cast <Declare*>(copiedstat)) {
 		//Calculating left corner of assignement statement block
 		Corner.x = p.x - UI.ASSGN_WDTH / 2;
 		Corner.y = p.y;
-		Declare* pDeclare = new Declare(Corner, SRHS);
-		if (cut) {
-			pManager->setIscut(false);
-			delete copiedstat;
-			pManager->SetClipboard(pDeclare);
-		}
-		pManager->AddStatement(pDeclare); // Adds the created statement to application manger's statement list
+		newstat = new Declare(Corner, SRHS);
+	}
+	pManager->SetSelectedStatement(NULL);
+	if (cut) {
+		pManager->setIscut(false);
+		delete copiedstat;
+		pManager->SetClipboard(newstat);
 	}
 	pOut->PrintMessage("Statement Pasted Successfully");
+	pManager->AddStatement(newstat); // Adds the created statement to application manger's statement list
 }
-
-

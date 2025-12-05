@@ -46,5 +46,10 @@ void Start::getdata(string& lhs, string& op, string& srhs, double& drhs)
 	//Start statement has no data
 }
 
+void Start::Edit(ApplicationManager* pManager)
+{
+	//Start statement has no editable data
+}
+
 void Start::UpdateStatementText() {}
 

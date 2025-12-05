@@ -68,6 +68,18 @@ void ValueAssign::getdata(string& lhs, string& op, string& srhs, double& drhs)
 	drhs = RHS;
 }
 
+void ValueAssign::Edit(ApplicationManager* pManager)
+{
+	//Get a pointer to the Input / Output interfaces
+	Output* pOut = pManager->GetOutput();
+	Input* pIn = pManager->GetInput();
+	//Read the new LHS and RHS
+	LHS = pIn->GetVariable(pOut);
+	RHS = pIn->GetValue(pOut);
+	pOut->ClearStatusBar();
+	UpdateStatementText();
+}
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()

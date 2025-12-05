@@ -58,6 +58,15 @@ void Write::getdata(string& lhs, string& op, string& srhs, double& drhs)
 	srhs = Variable;
 }
 
+void Write::Edit(ApplicationManager* pManager)
+{
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+	Variable = pIn->GetVariable(pOut);
+	pOut->ClearStatusBar();
+	UpdateStatementText();
+}
+
 
 //This function should be called when Variable changes
 void Write::UpdateStatementText()

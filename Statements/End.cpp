@@ -46,6 +46,11 @@ void End::getdata(string& lhs, string& op, string& srhs, double& drhs)
 	//End statement has no data
 }
 
+void End::Edit(ApplicationManager* pManager)
+{
+	//End statement has no editable data
+}
+
 void End::UpdateStatementText() {}
 
 

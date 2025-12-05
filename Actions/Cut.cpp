@@ -20,6 +20,11 @@ void Cut::Execute() {
 
 	ReadActionParameters();
 	Output* pOut = pManager->GetOutput();
+	if (cutstat == NULL)
+	{
+		pOut->PrintMessage("No Statement is Selected to Cut");
+		return;
+	}
 	pManager->SetClipboard(cutstat);
 	pManager->RemoveStatement(cutstat);
 	pManager->setIscut(true);

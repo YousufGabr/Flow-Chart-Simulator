@@ -68,6 +68,16 @@ void VarAssign::getdata(string& lhs, string& op, string& srhs, double& drhs)
 	srhs = RHS;
 }
 
+void VarAssign::Edit(ApplicationManager* pManager)
+{
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+	LHS = pIn->GetVariable(pOut);
+	RHS = pIn->GetVariable(pOut);
+	pOut->ClearStatusBar();
+	UpdateStatementText();
+}
+
 
 //This function should be called when LHS or RHS changes
 void VarAssign::UpdateStatementText()

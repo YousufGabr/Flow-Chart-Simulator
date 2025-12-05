@@ -3,8 +3,10 @@
 
 #include "..\defs.h"
 #include "..\Connector.h"
+#include "..\ApplicationManager.h"
 //class Output;
 #include "..\GUI\Output.h"
+class ApplicationManager;
 
 //Base class for all Statements
 class Statement
@@ -39,7 +41,7 @@ public:
 	//virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
 	//virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
 
-	//virtual void Edit() = 0;		//Edit the Statement parameter
+	virtual void Edit(ApplicationManager* pManager) = 0;		//Edit the Statement parameter
 
 	//virtual void Simulate();	//Execute the statement in the simulation mode
 
