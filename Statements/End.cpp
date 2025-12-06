@@ -41,7 +41,7 @@ Point End::GetOutlet() const
 	return Point(-1, -1);
 }
 
-void End::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void End::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	//End statement has no data
 }
@@ -49,6 +49,11 @@ void End::getdata(string& lhs, string& op, string& srhs, double& drhs)
 void End::Edit(ApplicationManager* pManager)
 {
 	//End statement has no editable data
+}
+
+void End::Save(ofstream& OutFile)
+{
+	OutFile << "END " << ID << " " << LeftCorner.x << " " << LeftCorner.y << endl;
 }
 
 void End::UpdateStatementText() {}

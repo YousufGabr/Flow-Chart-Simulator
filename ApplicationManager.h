@@ -4,8 +4,12 @@
 #include "DEFS.h"
 
 #include "Statements\Statement.h"
+#include "Connector.h"
+#include <fstream>
 class Input;
 class Output;
+class Connector;
+class Statement;
 
 
 //Main class that manages everything in the application.
@@ -51,6 +55,8 @@ public:
 	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
 	void RemoveConnector(Connector* pConn); //Removes a Connector from the Flowchart
 	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs
+
+	void SaveAll(ofstream& OutFile); //Saves all statements and connectors to a file
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)

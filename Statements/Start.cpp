@@ -41,7 +41,7 @@ Point Start::GetOutlet() const
 	return Outlet;
 }
 
-void Start::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void Start::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	//Start statement has no data
 }
@@ -49,6 +49,11 @@ void Start::getdata(string& lhs, string& op, string& srhs, double& drhs)
 void Start::Edit(ApplicationManager* pManager)
 {
 	//Start statement has no editable data
+}
+
+void Start::Save(ofstream& OutFile)
+{
+	OutFile << "START " << ID << " " << LeftCorner.x << " " << LeftCorner.y << endl;
 }
 
 void Start::UpdateStatementText() {}

@@ -8,9 +8,14 @@ Statement::Statement()
 	Selected = false;		
 }
 
+int Statement::NextID = 1; //Initialize static variable
+
 void Statement::SetSelected(bool s)
 {	Selected = s; }
 
 bool Statement::IsSelected() const
 {	return Selected; }
+
+int Statement::GetID() const
+{	return ID; }
 

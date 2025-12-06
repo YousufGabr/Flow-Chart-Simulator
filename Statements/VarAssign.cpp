@@ -62,7 +62,7 @@ Point VarAssign::GetOutlet() const
 	return Outlet;
 }
 
-void VarAssign::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void VarAssign::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	lhs = LHS;
 	srhs = RHS;
@@ -76,6 +76,12 @@ void VarAssign::Edit(ApplicationManager* pManager)
 	RHS = pIn->GetVariable(pOut);
 	pOut->ClearStatusBar();
 	UpdateStatementText();
+}
+
+void VarAssign::Save(ofstream& OutFile)
+{
+	//Assignment  ID  LeftCorner.x  LeftCorner.y  LHS  RHS
+	OutFile << "VAR_ASSIGN " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
 }
 
 

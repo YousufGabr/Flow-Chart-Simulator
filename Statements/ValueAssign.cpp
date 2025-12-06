@@ -62,7 +62,7 @@ Point ValueAssign::GetOutlet() const
 	return Outlet;
 }
 
-void ValueAssign::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void ValueAssign::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	lhs = LHS;
 	drhs = RHS;
@@ -78,6 +78,12 @@ void ValueAssign::Edit(ApplicationManager* pManager)
 	RHS = pIn->GetValue(pOut);
 	pOut->ClearStatusBar();
 	UpdateStatementText();
+}
+
+void ValueAssign::Save(ofstream& OutFile)
+{
+	//StatementType  ID  LHS  RHS  LeftCorner.x  LeftCorner.y
+	OutFile << "VAL_ASSIGN " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
 }
 
 

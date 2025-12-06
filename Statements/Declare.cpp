@@ -55,7 +55,7 @@ Point Declare::GetOutlet() const
 	return Outlet;
 }
 
-void Declare::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void Declare::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	srhs = Variable;
 }
@@ -67,6 +67,11 @@ void Declare::Edit(ApplicationManager* pManager)
 	Variable = pIn->GetVariable(pOut);
 	pOut->ClearStatusBar();
 	UpdateStatementText();
+}
+
+void Declare::Save(ofstream& OutFile)
+{
+	OutFile << "DECLARE " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << Variable << endl;
 }
 
 

@@ -23,8 +23,9 @@ public:
 	virtual bool ifclicked(Point P) const;
 	virtual Point GetInlet() const;
 	virtual Point GetOutlet() const;
-	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs);
+	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2);
 	virtual void Edit(ApplicationManager* pManager);
+	virtual void Save(ofstream& OutFile);
 
 };
 

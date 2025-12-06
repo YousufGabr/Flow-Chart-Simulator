@@ -2,6 +2,7 @@
 #include "..\ApplicationManager.h"
 #include "..\Statements\ValueAssign.h"
 #include "..\Statements\VarAssign.h"
+#include "..\Statements\OpAssign.h"
 #include "..\Statements\Start.h"
 #include "..\Statements\End.h"
 #include "..\Statements\Read.h"
@@ -29,7 +30,7 @@ void Paste::ReadActionParameters()
 	cut = pManager->getIscut();
 	pOut->PrintMessage("Click to Paste the Copied Statement");
 	pIn->GetPointClicked(p);
-	copiedstat->getdata(LHS, OP, SRHS, DRHS);
+	copiedstat->getdata(LHS, OP, SRHS, DRHS, SRHS2);
 	
 
 }
@@ -55,6 +56,12 @@ void Paste::Execute() {
 		Corner.y = p.y;
 		newstat = new VarAssign(Corner, LHS, SRHS);
 		
+	}
+	else if (dynamic_cast <OpAssign*>(copiedstat)) {
+		//Calculating left corner of assignement statement block
+		Corner.x = p.x - UI.ASSGN_WDTH / 2;
+		Corner.y = p.y;
+		newstat = new OpAssign(Corner, LHS, SRHS, OP, SRHS2);
 	}
 	else if (dynamic_cast <Start*>(copiedstat)) {
 		//Calculating left corner of assignement statement block

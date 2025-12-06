@@ -53,7 +53,7 @@ Point Write::GetOutlet() const
 	return Outlet;
 }
 
-void Write::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void Write::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	srhs = Variable;
 }
@@ -65,6 +65,11 @@ void Write::Edit(ApplicationManager* pManager)
 	Variable = pIn->GetVariable(pOut);
 	pOut->ClearStatusBar();
 	UpdateStatementText();
+}
+
+void Write::Save(ofstream& OutFile)
+{
+	OutFile << "WRITE "<< ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << Variable << endl;
 }
 
 

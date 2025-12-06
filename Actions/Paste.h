@@ -7,7 +7,7 @@ private:
 	Statement* copiedstat;
 	Statement* newstat;
 	Point p,Corner;
-	string LHS,SRHS,OP;
+	string LHS,SRHS,OP, SRHS2;
 	double DRHS;
 	bool cut;
 

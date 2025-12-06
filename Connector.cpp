@@ -88,6 +88,12 @@ bool Connector::ifclicked(Point P) const
 	}
 }
 
+void Connector::Save(ofstream& OutFile) const
+{
+	//You should save the source and destination statement IDs to be able to reload them later
+	OutFile << SrcStat->GetID() << " " << DstStat->GetID() << " 0" << endl;
+}
+
 
 void Connector::Draw(Output* pOut) const
 {

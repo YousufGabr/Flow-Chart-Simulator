@@ -53,7 +53,7 @@ Point Read::GetOutlet() const
 	return Outlet;
 }
 
-void Read::getdata(string& lhs, string& op, string& srhs, double& drhs)
+void Read::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
 	srhs = Variable;
 }
@@ -65,6 +65,11 @@ void Read::Edit(ApplicationManager* pManager)
 	Variable = pIn->GetVariable(pOut);
 	pOut->ClearStatusBar();
 	UpdateStatementText();
+}
+
+void Read::Save(ofstream& OutFile)
+{
+	OutFile << "READ " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << Variable << endl;
 }
 
 

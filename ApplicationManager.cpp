@@ -15,6 +15,7 @@
 #include "Actions\Copy.h"
 #include "Actions\Cut.h"
 #include "Actions\Paste.h"
+#include "Actions\Save.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -82,7 +83,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case ADD_OPER_ASSIGN:
-			pOut->PrintMessage("Action: add OPERATOR ASSIGNMENT statement, Click anywhere");
+			pAct = new AddOpAssign(this);
 			break;
 
 		case ADD_CONDITION:
@@ -138,7 +139,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 			// --- FILE OPERATIONS ---
 		case SAVE:
-			pOut->PrintMessage("Action: SAVE graph to file");
+			pAct = new Save(this);
 			break;
 
 		case LOAD:
@@ -341,6 +342,20 @@ Connector* ApplicationManager::GetSelectedConnector() const
 void ApplicationManager::SetSelectedConnector(Connector* pCon)
 {
 	pSelectedConn = pCon;
+}
+
+void ApplicationManager::SaveAll(ofstream& OutFile)
+{
+	//Save all statements
+	OutFile << StatCount << endl; //First write the number of statements
+	for (int i = 0; i < StatCount; i++) {
+		StatList[i]->Save(OutFile);
+	}
+	//Save all connectors
+	OutFile << ConnCount << endl; //First write the number of connectors
+	for (int i = 0; i < ConnCount; i++) {
+		ConnList[i]->Save(OutFile);
+	}
 }
 
 
