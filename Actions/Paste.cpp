@@ -31,6 +31,10 @@ void Paste::ReadActionParameters()
 	pOut->PrintMessage("Click to Paste the Copied Statement");
 	pIn->GetPointClicked(p);
 	copiedstat->getdata(LHS, OP, SRHS, DRHS, SRHS2);
+	//Calculating left corner of statement block
+	Corner.x = p.x - UI.ASSGN_WDTH / 2;
+	Corner.y = p.y;
+	
 	
 
 }
@@ -45,52 +49,38 @@ void Paste::Execute() {
 		return;
 	}
 	if (dynamic_cast <ValueAssign*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
-		Corner.x = p.x - UI.ASSGN_WDTH / 2;
-		Corner.y = p.y;
+		
 		newstat = new ValueAssign(Corner, LHS, DRHS);
 	}
 	else if (dynamic_cast <VarAssign*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
-		Corner.x = p.x - UI.ASSGN_WDTH / 2;
-		Corner.y = p.y;
+		
 		newstat = new VarAssign(Corner, LHS, SRHS);
 		
 	}
 	else if (dynamic_cast <OpAssign*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
-		Corner.x = p.x - UI.ASSGN_WDTH / 2;
-		Corner.y = p.y;
+		
 		newstat = new OpAssign(Corner, LHS, SRHS, OP, SRHS2);
 	}
 	else if (dynamic_cast <Start*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
+		
 		Corner.x = p.x - 50;
-		Corner.y = p.y;
 		newstat = new Start(Corner);
 	}
 	else if (dynamic_cast <End*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
+		
 		Corner.x = p.x - 50;
-		Corner.y = p.y;
 		newstat = new End(Corner);
 	}
 	else if (dynamic_cast <Read*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
-		Corner.x = p.x - UI.ASSGN_WDTH / 2;
-		Corner.y = p.y;
+		
 		newstat = new Read(Corner, SRHS);
 	}
 	else if (dynamic_cast <Write*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
-		Corner.x = p.x - UI.ASSGN_WDTH / 2;
-		Corner.y = p.y;
+		
 		newstat = new Write(Corner, SRHS);
 	}
 	else if (dynamic_cast <Declare*>(copiedstat)) {
-		//Calculating left corner of assignement statement block
-		Corner.x = p.x - UI.ASSGN_WDTH / 2;
-		Corner.y = p.y;
+		
 		newstat = new Declare(Corner, SRHS);
 	}
 	
