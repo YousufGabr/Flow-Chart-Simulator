@@ -77,7 +77,7 @@ void OpAssign::Edit(ApplicationManager* pManager)
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
 	LHS = pIn->GetVariable(pOut);
-	pOut->PrintMessage("Enter Firts Right Hand Side value:");
+	pOut->PrintMessage("Enter First Right Hand Side value:");
 	do{
 		RHS1 = pIn->GetString(pOut);
 		if (ValueOrVariable(RHS1) != INVALID_OP) break;
@@ -100,7 +100,17 @@ void OpAssign::Edit(ApplicationManager* pManager)
 void OpAssign::Save(ofstream& OutFile)
 {
 	//Assignment  ID  LeftCorner.x  LeftCorner.y  LHS  RHS
-	OutFile << "Op_ASSIGN " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS1 << " " << Op << " " << RHS2 << endl;
+	OutFile << "OP_ASSIGN " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS1 << " " << Op << " " << RHS2 << endl;
+}
+
+void OpAssign::Load(ifstream& InFile)
+{
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> LHS >> RHS1 >> Op >> RHS2;
+	Outlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	Inlet.x = Outlet.x;
+	Inlet.y = LeftCorner.y;
+	UpdateStatementText();
 }
 
 

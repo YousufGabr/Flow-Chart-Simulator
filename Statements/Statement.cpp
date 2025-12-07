@@ -19,3 +19,8 @@ bool Statement::IsSelected() const
 int Statement::GetID() const
 {	return ID; }
 
+void Statement::setID(int id)
+{
+	ID = id;
+}
+

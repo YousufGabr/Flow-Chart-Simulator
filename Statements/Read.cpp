@@ -72,6 +72,16 @@ void Read::Save(ofstream& OutFile)
 	OutFile << "READ " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << Variable << endl;
 }
 
+void Read::Load(ifstream& InFile)
+{
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> Variable;
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Inlet.y = LeftCorner.y;
+	Outlet.x = Inlet.x;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	UpdateStatementText();
+}
+
 
 //This function should be called when Variable changes
 void Read::UpdateStatementText()

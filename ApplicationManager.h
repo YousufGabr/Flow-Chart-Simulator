@@ -57,6 +57,9 @@ public:
 	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs
 
 	void SaveAll(ofstream& OutFile); //Saves all statements and connectors to a file
+	void clearall(); //Clears all statements and connectors from the flowchart
+	Statement* SearchStatementByID(int id) const; //Searches for a statement by its ID
+	void ArrangeStatementIDs(); //Rearranges the statement IDs after loading a flowchart from a file
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)

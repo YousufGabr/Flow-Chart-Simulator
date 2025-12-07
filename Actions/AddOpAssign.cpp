@@ -22,7 +22,7 @@ void AddOpAssign::ReadActionParameters()
 
 	pIn->GetPointClicked(Position);
 	LHS = pIn->GetVariable(pOut);
-	pOut->PrintMessage("Enter Firts Right Hand Side value:");
+	pOut->PrintMessage("Enter First Right Hand Side value:");
 	do {
 		RHS1 = pIn->GetString(pOut);
 		if (ValueOrVariable(RHS1) != INVALID_OP) break;

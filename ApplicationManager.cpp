@@ -16,6 +16,7 @@
 #include "Actions\Cut.h"
 #include "Actions\Paste.h"
 #include "Actions\Save.h"
+#include "Actions\Load.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -143,7 +144,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case LOAD:
-			pOut->PrintMessage("Action: LOAD graph from file");
+			pAct = new Load(this);
 			break;
 
 
@@ -344,6 +345,11 @@ void ApplicationManager::SetSelectedConnector(Connector* pCon)
 	pSelectedConn = pCon;
 }
 
+
+//==================================================================================//
+//						Other Management Functions								    //
+//==================================================================================//
+
 void ApplicationManager::SaveAll(ofstream& OutFile)
 {
 	//Save all statements
@@ -355,6 +361,38 @@ void ApplicationManager::SaveAll(ofstream& OutFile)
 	OutFile << ConnCount << endl; //First write the number of connectors
 	for (int i = 0; i < ConnCount; i++) {
 		ConnList[i]->Save(OutFile);
+	}
+}
+
+void ApplicationManager::clearall()
+{
+	//Clear all statements
+	for (int i = 0; i < StatCount; i++) {
+		delete StatList[i];
+		StatList[i] = NULL;
+	}
+	StatCount = 0;
+	//Clear all connectors
+	for (int i = 0; i < ConnCount; i++) {
+		delete ConnList[i];
+		ConnList[i] = NULL;
+	}
+	ConnCount = 0;
+}
+
+Statement* ApplicationManager::SearchStatementByID(int id) const
+{
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i]->GetID() == id)
+			return StatList[i];
+	}
+	return nullptr;
+}
+
+void ApplicationManager::ArrangeStatementIDs()
+{
+	for (int i = 0; i < StatCount; i++) {
+		StatList[i]->setID(i + 1); // IDs start from 1
 	}
 }
 

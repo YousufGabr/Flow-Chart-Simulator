@@ -27,6 +27,7 @@ public:
 	void SetSelected(bool s);
 	bool IsSelected() const;
 	int GetID() const;
+	void setID(int id);
 
 	virtual void Draw(Output* pOut) const  = 0 ;	//Draw the statement
 	virtual bool ifclicked(Point P) const = 0; //check if the statement is clicked
@@ -40,7 +41,7 @@ public:
 	///		Decide the parameters that you should pass to each function and its return type
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
-	//virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
+	virtual void Load(ifstream &InFile) = 0;	//Load the Statement parameters from a file
 
 	virtual void Edit(ApplicationManager* pManager) = 0;		//Edit the Statement parameter
 

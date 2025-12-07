@@ -84,6 +84,16 @@ void VarAssign::Save(ofstream& OutFile)
 	OutFile << "VAR_ASSIGN " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
 }
 
+void VarAssign::Load(ifstream& InFile)
+{
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> LHS >> RHS;
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Inlet.y = LeftCorner.y;
+	Outlet.x = Inlet.x;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	UpdateStatementText();
+}
+
 
 //This function should be called when LHS or RHS changes
 void VarAssign::UpdateStatementText()

@@ -21,5 +21,6 @@ public:
 	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2);
 	virtual void Edit(ApplicationManager* pManager);
 	virtual void Save(ofstream& OutFile);
+	virtual void Load(ifstream& InFile);
 };
 

@@ -72,6 +72,17 @@ void Write::Save(ofstream& OutFile)
 	OutFile << "WRITE "<< ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << Variable << endl;
 }
 
+void Write:: Load(ifstream& InFile)
+{
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> Variable;
+	
+	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
+	Inlet.y = LeftCorner.y;
+	Outlet.x = Inlet.x;
+	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+	UpdateStatementText();
+}
+
 
 //This function should be called when Variable changes
 void Write::UpdateStatementText()
