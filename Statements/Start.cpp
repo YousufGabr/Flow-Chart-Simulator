@@ -40,6 +40,14 @@ Point Start::GetOutlet() const
 {
 	return Outlet;
 }
+void Start::setOutConnector(Connector* pConn)
+{
+	pOutConn = pConn;
+}
+Connector* Start::getOutConnector() const
+{
+	return pOutConn;
+}
 
 void Start::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {

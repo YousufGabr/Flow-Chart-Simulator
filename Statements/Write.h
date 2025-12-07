@@ -23,6 +23,8 @@ public:
 	virtual bool ifclicked(Point P) const;
 	virtual Point GetInlet() const;
 	virtual Point GetOutlet() const;
+	void setOutConnector(Connector* pConn) override; //sets the outgoing connector of the statement
+	Connector* getOutConnector() const override; //returns the outgoing connector of the statement 
 	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2);
 	virtual void Edit(ApplicationManager* pManager);
 	virtual void Save(ofstream& OutFile);

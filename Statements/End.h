@@ -3,7 +3,6 @@
 class End : public Statement
 {
 private:
-	Connector* pOutConn;
 
 	Point Inlet;	//A point where connections enters this statement
 

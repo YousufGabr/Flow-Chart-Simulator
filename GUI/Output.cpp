@@ -216,7 +216,10 @@ void Output::DrawCondition(Point Left, int width, int height, string Text, bool 
 
 	//Write statement text
 	pWind->SetPen(BLACK, 2);
-	pWind->DrawString(Left.x+width/8, Left.y-height/5, Text);
+	pWind->DrawString(Left.x+width/4, Left.y-height/5, Text);
+	pWind->DrawString(Left.x - 20, Left.y - height / 5, "T");
+	pWind->DrawString(Left.x + UI.ASSGN_WDTH +10, Left.y - height / 5, "F");
+
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void Output::DrawRead(Point Left, int width, int height, string Text, bool Selected)

@@ -23,4 +23,13 @@ void Statement::setID(int id)
 {
 	ID = id;
 }
+void Statement::setOutConnector(Connector* pConn)
+{
+	//Default implementation (for statements with no outgoing connectors)
+}
+Connector* Statement::getOutConnector() const
+{
+	//Default implementation (for statements with no outgoing connectors)
+	return nullptr;
+}
 

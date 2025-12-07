@@ -26,6 +26,8 @@ public:
 	virtual bool ifclicked(Point P) const;
 	virtual Point GetInlet() const;
 	virtual Point GetOutlet() const;
+	void setOutConnector(Connector* pConn) override;
+	Connector* getOutConnector() const override;
 	virtual void getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2);
 	virtual void Edit(ApplicationManager* pManager);
 	virtual void Save(ofstream& OutFile);

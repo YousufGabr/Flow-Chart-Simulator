@@ -76,6 +76,8 @@ void Load::Execute() {
 			loadedstat = new Read(Corner);
 		else if (type == "WRITE")
 			loadedstat = new Write(Corner);
+		else if (type == "CONDITION")
+			loadedstat = new Condition(Corner);
 
 		loadedstat->Load(InFile);
 		pManager->AddStatement(loadedstat);
@@ -84,15 +86,42 @@ void Load::Execute() {
 	InFile >> num2;
 	while (num2 > 0)
 	{
-		int srcid, dstid, dummy;
-		InFile >> srcid >> dstid >> dummy;
+		int srcid, dstid, conid;
+		InFile >> srcid >> dstid >> conid;
 		start = pManager->SearchStatementByID(srcid);
 		end = pManager->SearchStatementByID(dstid);
-		loadedcon = new Connector(start, end);
-		loadedcon->setStartPoint(start->GetOutlet());
-		loadedcon->setEndPoint(end->GetInlet());
-		pManager->AddConnector(loadedcon);
-		num2--;
+		if (dynamic_cast<Condition*>(start))
+		{
+			Condition* cond = dynamic_cast<Condition*>(start);
+			if (conid==1)
+			{
+				loadedcon = new Connector(start, end);
+				cond->setTOutConn(loadedcon);
+				loadedcon->setStartPoint(cond->GetTOutlet());
+				loadedcon->setEndPoint(end->GetInlet());
+				pManager->AddConnector(loadedcon);
+				num2--;
+				continue;
+			}
+			else if (conid == 2)
+			{
+				loadedcon = new Connector(start, end);
+				cond->setFOutConn(loadedcon);
+				loadedcon->setStartPoint(cond->GetFOutlet());
+				loadedcon->setEndPoint(end->GetInlet());
+				pManager->AddConnector(loadedcon);
+				num2--;
+				continue;
+			}
+		}
+		else
+		{
+			loadedcon = new Connector(start, end);
+			loadedcon->setStartPoint(start->GetOutlet());
+			loadedcon->setEndPoint(end->GetInlet());
+			pManager->AddConnector(loadedcon);
+			num2--;
+		}
 	}
 	pManager->ArrangeStatementIDs();
 }

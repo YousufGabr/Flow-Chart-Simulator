@@ -28,6 +28,8 @@ public:
 	bool IsSelected() const;
 	int GetID() const;
 	void setID(int id);
+	virtual void setOutConnector(Connector* pConn); //sets the outgoing connector of the statement
+	virtual Connector* getOutConnector() const; //returns the outgoing connector of the statement
 
 	virtual void Draw(Output* pOut) const  = 0 ;	//Draw the statement
 	virtual bool ifclicked(Point P) const = 0; //check if the statement is clicked

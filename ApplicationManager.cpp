@@ -88,7 +88,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case ADD_CONDITION:
-			pOut->PrintMessage("Action: add CONDITIONAL statement (IF / WHILE), Click anywhere");
+			pAct = new AddCondition(this);
 			break;
 
 		case ADD_READ:
@@ -315,6 +315,18 @@ void ApplicationManager::RemoveConnector(Connector* pConn)
 			}
 			ConnList[ConnCount - 1] = NULL; // Optional: Clear the last pointer
 			ConnCount--;
+			if (dynamic_cast<Condition*>(pConn->getSrcStat()))
+			{
+				Condition* condStat = dynamic_cast<Condition*>(pConn->getSrcStat());
+				// Check if the connector is the true or false outgoing connector
+				if (condStat->getTOutConn() == pConn) {
+					condStat->setTOutConn(NULL); // Remove the connector from the true branch
+				}
+				else if (condStat->getFOutConn() == pConn) {
+					condStat->setFOutConn(NULL); // Remove the connector from the false branch
+				}
+			}
+			else pConn->getSrcStat()->setOutConnector(NULL); // Remove the connector from the source statement
 			delete pConn; // Free the memory allocated for the connector
 			return;
 		}

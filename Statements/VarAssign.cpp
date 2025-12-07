@@ -61,6 +61,14 @@ Point VarAssign::GetOutlet() const
 {
 	return Outlet;
 }
+void VarAssign::setOutConnector(Connector* pConn)
+{
+	pOutConn = pConn;
+}
+Connector* VarAssign::getOutConnector() const
+{
+	return pOutConn;
+}
 
 void VarAssign::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {

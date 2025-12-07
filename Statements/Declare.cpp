@@ -54,6 +54,14 @@ Point Declare::GetOutlet() const
 {
 	return Outlet;
 }
+void Declare::setOutConnector(Connector* pConn)
+{
+	pOutConn = pConn;
+}
+Connector* Declare::getOutConnector() const
+{
+	return pOutConn;
+}
 
 void Declare::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {

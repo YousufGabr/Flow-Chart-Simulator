@@ -8,6 +8,7 @@
 #include "..\Statements\Read.h"
 #include "..\Statements\Write.h"
 #include "..\Statements\Declare.h"
+#include "..\Statements\Condition.h"
 
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
@@ -82,6 +83,10 @@ void Paste::Execute() {
 	else if (dynamic_cast <Declare*>(copiedstat)) {
 		
 		newstat = new Declare(Corner, SRHS);
+	}
+	else if (dynamic_cast <Condition*>(copiedstat)) {
+		
+		newstat = new Condition(Corner, LHS, OP, SRHS);
 	}
 	
 	if (cut) {

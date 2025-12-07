@@ -52,6 +52,14 @@ Point Read::GetOutlet() const
 {
 	return Outlet;
 }
+void Read::setOutConnector(Connector* pConn)
+{
+	pOutConn = pConn;
+}
+Connector* Read::getOutConnector() const
+{
+	return pOutConn;
+}
 
 void Read::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {

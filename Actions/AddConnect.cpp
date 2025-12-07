@@ -2,6 +2,7 @@
 #include "..\ApplicationManager.h"
 #include "..\Statements\End.h"
 #include "..\Statements\Start.h"
+#include "..\Statements\Condition.h"
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
 
@@ -76,14 +77,47 @@ void AddConnect::Execute()
 	ReadActionParameters();
 	if (src == NULL || dst == NULL)
 		return;
-
-
-	//Calculating left corner of Declare statement block
+	if (dynamic_cast<Condition*>(src))
+	{
+		Condition* cond = dynamic_cast<Condition*>(src);
+		if (cond->getTOutConn() != NULL && cond->getFOutConn() != NULL)
+		{
+			pManager->GetOutput()->PrintMessage("Aborted: Condition Statement Already Has Two Outgoing Connectors");
+			return;
+		}
+		else if (cond->getTOutConn() == NULL)
+		{
+			Connector* pConn = new Connector(src, dst);
+			pConn->setStartPoint(cond->GetTOutlet());
+			pConn->setEndPoint(dst->GetInlet());
+			cond->setTOutConn(pConn);
+			pConn->setID(1); // to identify true branch
+			pManager->AddConnector(pConn); // Adds the created statement to application manger's statement list
+			return;
+		}
+		else if (cond->getFOutConn() == NULL)
+		{
+			Connector* pConn = new Connector(src, dst);
+			pConn->setStartPoint(cond->GetFOutlet());
+			pConn->setEndPoint(dst->GetInlet());
+			cond->setFOutConn(pConn);
+			pConn->setID(2); // to identify false branch
+			pManager->AddConnector(pConn); // Adds the created statement to application manger's statement list
+			return;
+		}
+	}
 	
-
-	Connector* pConn = new Connector(src, dst);
-	pConn->setStartPoint(src->GetOutlet());
-	pConn->setEndPoint(dst->GetInlet());
-
-	pManager->AddConnector(pConn); // Adds the created statement to application manger's statement list
+	else 
+	{
+		if (src->getOutConnector() != NULL)
+		{
+			pManager->GetOutput()->PrintMessage("Aborted: Source Statement Already Has An Outgoing Connector");
+			return;
+		}
+		Connector* pConn = new Connector(src, dst);
+		pConn->setStartPoint(src->GetOutlet());
+		pConn->setEndPoint(dst->GetInlet());
+		src->setOutConnector(pConn);
+		pManager->AddConnector(pConn); // Adds the created statement to application manger's statement list
+	}
 }

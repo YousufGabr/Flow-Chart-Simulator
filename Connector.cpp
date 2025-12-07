@@ -8,6 +8,7 @@ Connector::Connector(Statement* Src, Statement* Dst)
 	SrcStat = Src;
 	DstStat = Dst;
 	Selected = false;
+	con_id = 0;
 }
 
 void Connector::SetSelected(bool s)
@@ -18,6 +19,14 @@ void Connector::SetSelected(bool s)
 bool Connector::IsSelected() const
 {
 	return Selected;
+}
+void Connector::setID(int id)
+{
+	con_id = id;
+}
+int Connector::getID() const
+{
+	return con_id;
 }
 
 void Connector::setSrcStat(Statement *Src)
@@ -91,7 +100,7 @@ bool Connector::ifclicked(Point P) const
 void Connector::Save(ofstream& OutFile) const
 {
 	//You should save the source and destination statement IDs to be able to reload them later
-	OutFile << SrcStat->GetID() << " " << DstStat->GetID() << " 0" << endl;
+	OutFile << SrcStat->GetID() << " " << DstStat->GetID() << " "  << con_id << endl;
 }
 
 

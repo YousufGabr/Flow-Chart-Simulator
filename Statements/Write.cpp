@@ -52,6 +52,14 @@ Point Write::GetOutlet() const
 {
 	return Outlet;
 }
+void Write::setOutConnector(Connector* pConn)
+{
+	pOutConn = pConn;
+}
+Connector* Write::getOutConnector() const
+{
+	return pOutConn;
+}
 
 void Write::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {

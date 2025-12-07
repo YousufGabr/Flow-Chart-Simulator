@@ -61,6 +61,14 @@ Point ValueAssign::GetOutlet() const
 {
 	return Outlet;
 }
+void ValueAssign::setOutConnector(Connector* pConn)
+{
+	pOutConn = pConn;
+}
+Connector* ValueAssign::getOutConnector() const
+{
+	return pOutConn;
+}
 
 void ValueAssign::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {

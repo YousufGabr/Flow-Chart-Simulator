@@ -8,8 +8,6 @@ End::End(Point Lcorner)
 
 	LeftCorner = Lcorner;
 
-	pOutConn = NULL;	//No connectors yet
-
 	Inlet.x = LeftCorner.x + 50;
 	Inlet.y = LeftCorner.y;
 }

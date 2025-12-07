@@ -15,11 +15,14 @@ private:
 	Point Start;	//Start point of the connector
 	Point End;		//End point of the connector
 	bool Selected; //true if the connector is selected
+	int con_id; //connector ID
 public:
 	Connector(Statement* Src, Statement* Dst);
 
 	void SetSelected(bool s);
 	bool IsSelected() const;
+	void setID(int id);
+	int getID() const;
 
 	void		setSrcStat(Statement *Src);
 	Statement*	getSrcStat();	
