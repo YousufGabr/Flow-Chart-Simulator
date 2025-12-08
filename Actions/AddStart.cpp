@@ -16,18 +16,39 @@ void AddStart::ReadActionParameters()
 {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
+	if(Start::getExists())
+	{
+		pOut->PrintMessage("Aborted: Start statement already exists!");
+		return;
+	}
 
 	//Read the (Position) parameter
 	pOut->PrintMessage("Start Statement: Click to add the statement");
 
 	pIn->GetPointClicked(Position);
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	pOut->ClearStatusBar();
 }
 
 void AddStart::Execute()
 {
 	ReadActionParameters();
+	if (Start::getExists()) return;
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
 
+	if (pManager->getIscut())
+	{
+		if (dynamic_cast<Start*>(pManager->GetClipboard()))
+		{
+			delete pManager->GetClipboard();
+			pManager->SetClipboard(NULL);
+			pManager->setIscut(false);
+		}
+	}
 
 	//Calculating left corner of Write statement block
 	Point Corner;

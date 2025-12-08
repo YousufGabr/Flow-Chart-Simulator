@@ -16,17 +16,39 @@ void AddEnd::ReadActionParameters()
 {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
+	if (End::getExists())
+	{
+		pOut->PrintMessage("Aborted: End statement already exists!");
+		return;
+	}
 
 	//Read the (Position) parameter
 	pOut->PrintMessage("End Statement: Click to add the statement");
 
 	pIn->GetPointClicked(Position);
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	pOut->ClearStatusBar();
 }
 
 void AddEnd::Execute()
 {
 	ReadActionParameters();
+	if (End::getExists()) return;
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
+
+	if (pManager->getIscut())
+	{
+		if (dynamic_cast<End*>(pManager->GetClipboard()))
+		{
+			delete pManager->GetClipboard();
+			pManager->SetClipboard(NULL);
+			pManager->setIscut(false);
+		}
+	}
 
 
 	//Calculating left corner of Write statement block

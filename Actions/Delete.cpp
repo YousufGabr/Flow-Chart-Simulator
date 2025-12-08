@@ -1,5 +1,7 @@
 #include "Delete.h"
 #include "..\ApplicationManager.h"
+#include "..\Statements\Start.h"
+#include "..\Statements\End.h"
 
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
@@ -29,6 +31,10 @@ void Delete::Execute() {
 		if(selectedstat == pManager->GetClipboard())
 			pManager->SetClipboard(NULL);
 		pManager->RemoveStatement(selectedstat);
+		if(dynamic_cast<Start*>(selectedstat))
+			Start::setExists(false);
+		else if(dynamic_cast<End*>(selectedstat))
+			End::setExists(false);
 		delete selectedstat;
 		pManager->SetSelectedStatement(NULL);
 		pOut->PrintMessage("Statement and Its Connectors Deleted Successfully");

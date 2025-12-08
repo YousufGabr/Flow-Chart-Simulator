@@ -21,6 +21,11 @@ void AddOpAssign::ReadActionParameters()
 	pOut->PrintMessage("Operator Assignment Statement: Click to add the statement");
 
 	pIn->GetPointClicked(Position);
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	LHS = pIn->GetVariable(pOut);
 	pOut->PrintMessage("Enter First Right Hand Side value:");
 	do {
@@ -47,6 +52,7 @@ void AddOpAssign::ReadActionParameters()
 void AddOpAssign::Execute()
 {
 	ReadActionParameters();
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
 
 
 	//Calculating left corner of assignement statement block

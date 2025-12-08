@@ -23,6 +23,11 @@ void AddValueAssign::ReadActionParameters()
 	pOut->PrintMessage("Value Assignment Statement: Click to add the statement");
 
 	pIn->GetPointClicked(Position);
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	pOut->ClearStatusBar();	
 	LHS = pIn->GetVariable(pOut);
 	RHS = pIn->GetValue(pOut);
@@ -36,6 +41,7 @@ void AddValueAssign::ReadActionParameters()
 void AddValueAssign::Execute()
 {
 	ReadActionParameters();
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
 		
 	
 	//Calculating left corner of assignement statement block

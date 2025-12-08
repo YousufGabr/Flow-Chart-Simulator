@@ -3,6 +3,7 @@
 class End : public Statement
 {
 private:
+	static bool exists;
 
 	Point Inlet;	//A point where connections enters this statement
 
@@ -12,6 +13,8 @@ private:
 
 public:
 	End(Point Lcorner);
+	static void setExists(bool ex);
+	static  bool getExists();
 
 	virtual void Draw(Output* pOut) const;
 	virtual bool ifclicked(Point P) const;

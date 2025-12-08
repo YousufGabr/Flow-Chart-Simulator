@@ -21,6 +21,11 @@ void AddWrite::ReadActionParameters()
 	pOut->PrintMessage("Write Statement: Click to add the statement");
 
 	pIn->GetPointClicked(Position);
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	pOut->ClearStatusBar();
 	Variable = pIn->GetVariable(pOut);
 	pOut->ClearStatusBar();
@@ -29,6 +34,7 @@ void AddWrite::ReadActionParameters()
 void AddWrite::Execute()
 {
 	ReadActionParameters();
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
 
 
 	//Calculating left corner of Write statement block

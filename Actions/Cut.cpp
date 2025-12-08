@@ -1,5 +1,7 @@
 #include "Cut.h"
 #include "..\ApplicationManager.h"
+#include "..\Statements\Start.h"
+#include "..\Statements\End.h"
 
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
@@ -25,6 +27,10 @@ void Cut::Execute() {
 		pOut->PrintMessage("No Statement is Selected to Cut");
 		return;
 	}
+	if(dynamic_cast<Start*>(cutstat))
+		Start::setExists(false);
+	else if(dynamic_cast<End*>(cutstat))
+		End::setExists(false);
 	pManager->SetSelectedStatement(NULL);
 	pManager->SetClipboard(cutstat);
 	pManager->RemoveStatement(cutstat);

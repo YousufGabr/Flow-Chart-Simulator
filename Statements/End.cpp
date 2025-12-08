@@ -5,11 +5,22 @@ using namespace std;
 
 End::End(Point Lcorner)
 {
-
+	exists = true;
 	LeftCorner = Lcorner;
 
 	Inlet.x = LeftCorner.x + 50;
 	Inlet.y = LeftCorner.y;
+}
+bool End::exists = false;
+void End::setExists(bool ex)
+{
+	//Set the static variable exists to ex
+	exists = ex;
+}
+bool End::getExists()
+{
+	//Return the static variable exists
+	return exists;
 }
 
 void End::Draw(Output* pOut) const

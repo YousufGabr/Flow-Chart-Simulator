@@ -3,6 +3,7 @@
 class Start : public Statement
 {
 private:
+	static bool exists;
 	Connector* pOutConn;
 	Point Outlet;	//A point a connection leaves this statement
 
@@ -12,6 +13,8 @@ private:
 
 public:
 	Start(Point Lcorner);
+	static void setExists(bool ex);
+	static  bool getExists();
 
 	virtual void Draw(Output* pOut) const;
 	virtual bool ifclicked(Point P) const;

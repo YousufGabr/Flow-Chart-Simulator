@@ -64,11 +64,21 @@ void Paste::Execute() {
 	}
 	else if (dynamic_cast <Start*>(copiedstat)) {
 		
+		if(Start::getExists())
+		{
+			pOut->PrintMessage("Aborted: Start statement already exists!");
+			return;
+		}
 		Corner.x = p.x - 50;
 		newstat = new Start(Corner);
 	}
 	else if (dynamic_cast <End*>(copiedstat)) {
 		
+		if(End::getExists())
+		{
+			pOut->PrintMessage("Aborted: End statement already exists!");
+			return;
+		}
 		Corner.x = p.x - 50;
 		newstat = new End(Corner);
 	}

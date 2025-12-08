@@ -5,13 +5,24 @@ using namespace std;
 
 Start::Start(Point Lcorner)
 {
-
+	exists = true;
 	LeftCorner = Lcorner;
 
 	pOutConn = NULL;	//No connectors yet
 
 	Outlet.x = LeftCorner.x + 50;
 	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
+}
+bool Start::exists = false;
+void Start::setExists(bool ex)
+{
+	//Set the static variable exists to ex
+	exists = ex;
+}
+bool Start::getExists()
+{
+	//Return the static variable exists
+	return exists;
 }
 
 void Start::Draw(Output* pOut) const

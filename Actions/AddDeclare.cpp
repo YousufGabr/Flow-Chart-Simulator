@@ -21,6 +21,11 @@ void AddDeclare::ReadActionParameters()
 	pOut->PrintMessage("Declare Statement: Click to add the statement");
 
 	pIn->GetPointClicked(Position);
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	pOut->ClearStatusBar();
 	Variable = pIn->GetVariable(pOut);
 	pOut->ClearStatusBar();
@@ -29,7 +34,7 @@ void AddDeclare::ReadActionParameters()
 void AddDeclare::Execute()
 {
 	ReadActionParameters();
-
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
 
 	//Calculating left corner of Declare statement block
 	Point Corner;
