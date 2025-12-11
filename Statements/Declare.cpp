@@ -92,6 +92,17 @@ void Declare::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void Declare::ValidateStat(ApplicationManager* pManager)
+{
+	pManager->addVariable(Variable, 0);
+	pOutConn->getDstStat()->ValidateStat(pManager);
+}
+
+void Declare::Simulate(ApplicationManager* pManager)
+{
+	pManager->addVariable(Variable, 0);
+	pOutConn->getDstStat()->Simulate(pManager);
+}
 
 //This function should be called when Variable changes
 void Declare::UpdateStatementText()

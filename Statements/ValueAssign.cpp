@@ -104,6 +104,24 @@ void ValueAssign::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void ValueAssign::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	if (pManager->findVariable(LHS) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + LHS + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
+}
+
+void ValueAssign::Simulate(ApplicationManager* pManager)
+{
+	pManager->setVariable(LHS, RHS);
+	pOutConn->getDstStat()->Simulate(pManager);
+}
+
 
 //This function should be called when LHS or RHS changes
 void ValueAssign::UpdateStatementText()

@@ -90,6 +90,27 @@ void Read::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void Read::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	if (pManager->findVariable(Variable) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + Variable + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
+}
+
+void Read::Simulate(ApplicationManager* pManager)
+{
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+	double input = pIn->GetValue(pOut);
+	pManager->setVariable(Variable, input);
+	pOutConn->getDstStat()->Simulate(pManager);
+}
+
 
 //This function should be called when Variable changes
 void Read::UpdateStatementText()

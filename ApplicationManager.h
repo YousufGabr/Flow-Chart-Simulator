@@ -21,6 +21,10 @@ private:
 	int StatCount;		//Actual number of statements
 	int ConnCount;		//Actual number of connectors
 	bool iscut;	 //flag to check if the operation is cut
+	bool valid;
+	string varNames[MaxCount];   // variable names
+	double varValues[MaxCount];  // variable values
+	int varCount;       // how many variables are currently stored
 	Statement* StatList[MaxCount];	//List of all statements (Array of pointers)
 	Connector* ConnList[MaxCount];	//List of all connectors (Array of pointers)
 
@@ -56,10 +60,18 @@ public:
 	void RemoveConnector(Connector* pConn); //Removes a Connector from the Flowchart
 	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs
 
+	int findVariable(const string& name);
+	void addVariable(const string& name, double value);
+	void setVariable(const string& name, double value);
+	double getVarValue(const string& name);
+
 	void SaveAll(ofstream& OutFile); //Saves all statements and connectors to a file
 	void clearall(); //Clears all statements and connectors from the flowchart
 	Statement* SearchStatementByID(int id) const; //Searches for a statement by its ID
 	void ArrangeStatementIDs(); //Rearranges the statement IDs after loading a flowchart from a file
+	void ValidateChart();
+	void setvalid(bool v);
+	void RunChart();
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)

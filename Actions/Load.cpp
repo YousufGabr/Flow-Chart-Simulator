@@ -99,6 +99,7 @@ void Load::Execute() {
 				cond->setTOutConn(loadedcon);
 				loadedcon->setStartPoint(cond->GetTOutlet());
 				loadedcon->setEndPoint(end->GetInlet());
+				loadedcon->setID(1); // to identify true branch
 				pManager->AddConnector(loadedcon);
 				num2--;
 				continue;
@@ -109,6 +110,7 @@ void Load::Execute() {
 				cond->setFOutConn(loadedcon);
 				loadedcon->setStartPoint(cond->GetFOutlet());
 				loadedcon->setEndPoint(end->GetInlet());
+				loadedcon->setID(2); // to identify false branch
 				pManager->AddConnector(loadedcon);
 				num2--;
 				continue;
@@ -119,6 +121,7 @@ void Load::Execute() {
 			loadedcon = new Connector(start, end);
 			loadedcon->setStartPoint(start->GetOutlet());
 			loadedcon->setEndPoint(end->GetInlet());
+			start->setOutConnector(loadedcon);
 			pManager->AddConnector(loadedcon);
 			num2--;
 		}

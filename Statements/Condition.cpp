@@ -132,6 +132,53 @@ void Condition::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void Condition::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	if (pManager->findVariable(LHS) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + LHS + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	if (IsVariable(RHS) && pManager->findVariable(RHS) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + RHS + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	TOutConn->getDstStat()->ValidateStat(pManager);
+	FOutConn->getDstStat()->ValidateStat(pManager);
+
+}
+
+void Condition::Simulate(ApplicationManager* pManager)
+{
+	bool check = false;
+	if (IsValue(RHS))
+	{
+		if (Op == "==") check = pManager->getVarValue(LHS) == stod(RHS);
+		if (Op == "!=") check = pManager->getVarValue(LHS) != stod(RHS);
+		if (Op == ">") check = pManager->getVarValue(LHS) > stod(RHS);
+		if (Op == ">=") check = pManager->getVarValue(LHS) >= stod(RHS);
+		if (Op == "<") check = pManager->getVarValue(LHS) < stod(RHS);
+		if (Op == "<=") check = pManager->getVarValue(LHS) <= stod(RHS);
+	}
+	else if (IsVariable(RHS))
+	{
+		if (Op == "==") check = pManager->getVarValue(LHS) == pManager->getVarValue(RHS);
+		if (Op == "!=") check = pManager->getVarValue(LHS) != pManager->getVarValue(RHS);
+		if (Op == ">") check = pManager->getVarValue(LHS) > pManager->getVarValue(RHS);
+		if (Op == ">=") check = pManager->getVarValue(LHS) >= pManager->getVarValue(RHS);
+		if (Op == "<") check = pManager->getVarValue(LHS) < pManager->getVarValue(RHS);
+		if (Op == "<=") check = pManager->getVarValue(LHS) <= pManager->getVarValue(RHS);
+	}
+
+	if(check) TOutConn->getDstStat()->Simulate(pManager);
+	else FOutConn->getDstStat()->Simulate(pManager);
+
+}
+
 
 //This function should be called when LHS or RHS changes
 void Condition::UpdateStatementText()

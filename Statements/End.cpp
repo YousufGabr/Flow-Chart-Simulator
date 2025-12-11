@@ -72,6 +72,17 @@ void End::Load(ifstream& InFile)
 	Inlet.y = LeftCorner.y;
 }
 
+void End::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	pOut->PrintMessage("FlowChart is Valid!");
+	pManager->setvalid(true);
+}
+
+void End::Simulate(ApplicationManager* pManager)
+{
+}
+
 void End::UpdateStatementText() {}
 
 

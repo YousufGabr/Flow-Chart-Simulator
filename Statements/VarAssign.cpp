@@ -102,6 +102,30 @@ void VarAssign::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void VarAssign::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	if (pManager->findVariable(LHS) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + LHS + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	if (pManager->findVariable(RHS) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + RHS + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
+}
+
+void VarAssign::Simulate(ApplicationManager* pManager)
+{
+	pManager->setVariable(LHS,pManager->getVarValue(RHS));
+	pOutConn->getDstStat()->Simulate(pManager);
+}
+
 
 //This function should be called when LHS or RHS changes
 void VarAssign::UpdateStatementText()

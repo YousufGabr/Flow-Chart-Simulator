@@ -91,6 +91,25 @@ void Write:: Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void Write::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	if (pManager->findVariable(Variable) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + Variable + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
+}
+
+void Write::Simulate(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	pOut->DrawString(UI.DrawingAreaWidth + 20, UI.ToolBarHeight + 20, Variable + "=" + doubleToString(pManager->getVarValue(Variable)));
+	pOutConn->getDstStat()->Simulate(pManager);
+}
+
 
 //This function should be called when Variable changes
 void Write::UpdateStatementText()

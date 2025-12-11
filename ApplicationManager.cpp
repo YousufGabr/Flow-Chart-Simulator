@@ -1,4 +1,4 @@
-#include "ApplicationManager.h"
+﻿#include "ApplicationManager.h"
 #include "Actions\AddValueAssign.h"
 #include "Actions\AddVarAssign.h"
 #include "Actions\AddOpAssign.h"
@@ -17,6 +17,8 @@
 #include "Actions\Paste.h"
 #include "Actions\Save.h"
 #include "Actions\Load.h"
+#include "Actions\Validate.h"
+#include "Actions\Run.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -29,7 +31,9 @@ ApplicationManager::ApplicationManager()
 	
 	StatCount = 0;
 	ConnCount = 0;
+	varCount = 0;
 	iscut = false;
+	valid = false;
 	pSelectedStat = NULL;	//no Statement is selected yet
 	pSelectedConn = NULL;	//no Connector is selected yet
 	pClipboard = NULL;
@@ -39,6 +43,8 @@ ApplicationManager::ApplicationManager()
 	{
 		StatList[i] = NULL;	
 		ConnList[i] = NULL;
+		varNames[i] = "";
+		varValues[i] = 0;
 	}
 }
 
@@ -179,11 +185,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 			// --- SIMULATION ACTIONS ---
 		case VALIDATE:
-			pOut->PrintMessage("Action: VALIDATE the flowchart");
+			pAct = new Validate(this);
 			break;
 
 		case RUN:
-			pOut->PrintMessage("Action: RUN the flowchart");
+			pAct = new Run(this);
 			break;
 
 		case DEBUG:
@@ -359,6 +365,51 @@ void ApplicationManager::SetSelectedConnector(Connector* pCon)
 
 
 //==================================================================================//
+//						Variable Management Functions						        //
+//==================================================================================//
+
+int ApplicationManager::findVariable(const string& name)
+{
+	for (int i = 0; i < varCount; i++)
+		if (varNames[i] == name)
+			return i;  // found, return index
+
+	return -1; // NOT found
+}
+
+void ApplicationManager::addVariable(const string& name, double value)
+{
+	varNames[varCount] = name;
+	varValues[varCount] = value;
+	varCount++;
+}
+
+void ApplicationManager::setVariable(const string& name, double value)
+{
+	int idx = findVariable(name);
+
+	if (idx != -1) {
+		// already exists → update value
+		varValues[idx] = value;
+	}
+	else {
+		// new variable → add it
+		addVariable(name, value);
+	}
+}
+
+double ApplicationManager::getVarValue(const string& name)
+{
+	int idx = findVariable(name);
+
+	if (idx == -1)
+		return -1;
+
+	return varValues[idx];
+}
+
+
+//==================================================================================//
 //						Other Management Functions								    //
 //==================================================================================//
 
@@ -406,6 +457,105 @@ void ApplicationManager::ArrangeStatementIDs()
 	for (int i = 0; i < StatCount; i++) {
 		StatList[i]->setID(i + 1); // IDs start from 1
 	}
+}
+
+void ApplicationManager::ValidateChart()
+{
+	if (!Start::getExists())
+	{
+		pOut->PrintMessage("Error: No Start Statement Placed");
+		return;
+	}
+	if (!End::getExists()) 
+	{ 
+		pOut->PrintMessage("Error: No End Statement Placed"); 
+		return;
+	}
+	for (int i = 0; i < StatCount; i++) 
+	{
+		if (!dynamic_cast<End*>(StatList[i]))
+		{
+			if (dynamic_cast<Condition*>(StatList[i]))
+			{
+				Condition* cond = dynamic_cast<Condition*>(StatList[i]);
+				if (cond->getTOutConn() == nullptr)
+				{
+					pOut->PrintMessage("Error: Missing Condition True Connector");
+					return;
+				}
+				if (cond->getFOutConn() == nullptr)
+				{
+					pOut->PrintMessage("Error: Missing Condition False Connector");
+					return;
+				}
+
+			}
+			else
+			{
+				if (StatList[i]->getOutConnector() == nullptr)
+				{
+					pOut->PrintMessage("Error: Missing Connectors");
+					return;
+				}
+			}
+		}
+		else if (dynamic_cast<End*>(StatList[i]))
+		{
+			bool found = false;
+			for (int j = 0; j < ConnCount; j++) 
+			{
+				if (ConnList[j]->getDstStat() == StatList[i]) found = true;
+			}
+			if (!found)
+			{
+				pOut->PrintMessage("Error: End Statement Not Connected");
+				break;
+			}
+		}
+			
+	}
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Start*>(StatList[i]))
+		{
+			StatList[i]->ValidateStat(this);
+			break;
+		}
+	}
+	for (int i = 0; i < MaxCount; i++)
+	{
+		varNames[i] = "";
+		varValues[i] = 0;
+	}
+}
+
+void ApplicationManager::setvalid(bool v)
+{
+	valid = v;
+}
+
+void ApplicationManager::RunChart()
+{
+	//validate before run
+	pOut->ClearOutputBar();
+	Action* pAct = new Validate(this);
+	pAct->Execute();
+	delete pAct;
+	if (!valid) return;
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Start*>(StatList[i]))
+		{
+			StatList[i]->Simulate(this);
+			break;
+		}
+	}
+	for (int i = 0; i < MaxCount; i++)
+	{
+		varNames[i] = "";
+		varValues[i] = 0;
+	}
+	pOut->PrintMessage("FlowChart Simulated Successfully!");
 }
 
 

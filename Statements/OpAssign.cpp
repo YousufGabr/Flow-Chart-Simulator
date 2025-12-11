@@ -121,6 +121,71 @@ void OpAssign::Load(ifstream& InFile)
 	UpdateStatementText();
 }
 
+void OpAssign::ValidateStat(ApplicationManager* pManager)
+{
+	Output* pOut = pManager->GetOutput();
+	if (pManager->findVariable(LHS) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + LHS + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	if (IsVariable(RHS1) && pManager->findVariable(RHS1) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + RHS1 + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	if (IsVariable(RHS2) && pManager->findVariable(RHS2) == -1)
+	{
+		pOut->PrintMessage("Error: Variable (" + RHS2 + ") Not Declared");
+		pManager->setvalid(false);
+		return;
+	}
+	if (Op=="/" && RHS2 == "0")
+	{
+		pOut->PrintMessage("Error: Cannot Divide By 0");
+		pManager->setvalid(false);
+		return;
+	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
+}
+
+void OpAssign::Simulate(ApplicationManager* pManager)
+{
+	double result;
+	if (IsValue(RHS1) && IsValue(RHS2))
+	{
+		if (Op == "+") result = stod(RHS1) + stod(RHS2);
+		if (Op == "-") result = stod(RHS1) - stod(RHS2);
+		if (Op == "*") result = stod(RHS1) * stod(RHS2);
+		if (Op == "/") result = stod(RHS1) / stod(RHS2);
+	}
+	else if (IsValue(RHS1) && IsVariable(RHS2))
+	{
+		if (Op == "+") result = stod(RHS1) + pManager->getVarValue(RHS2);
+		if (Op == "-") result = stod(RHS1) - pManager->getVarValue(RHS2);
+		if (Op == "*") result = stod(RHS1) * pManager->getVarValue(RHS2);
+		if (Op == "/") result = stod(RHS1) / pManager->getVarValue(RHS2);
+	}
+	else if (IsVariable(RHS1) && IsValue(RHS2))
+	{
+		if (Op == "+") result = pManager->getVarValue(RHS1) + stod(RHS2);
+		if (Op == "-") result = pManager->getVarValue(RHS1) - stod(RHS2);
+		if (Op == "*") result = pManager->getVarValue(RHS1) * stod(RHS2);
+		if (Op == "/") result = pManager->getVarValue(RHS1) / stod(RHS2);
+	}
+	else if (IsVariable(RHS1) && IsVariable(RHS2))
+	{
+		if (Op == "+") result = pManager->getVarValue(RHS1) + pManager->getVarValue(RHS2);
+		if (Op == "-") result = pManager->getVarValue(RHS1) - pManager->getVarValue(RHS2);
+		if (Op == "*") result = pManager->getVarValue(RHS1) * pManager->getVarValue(RHS2);
+		if (Op == "/") result = pManager->getVarValue(RHS1) / pManager->getVarValue(RHS2);
+	}
+	pManager->setVariable(LHS, result);
+	pOutConn->getDstStat()->Simulate(pManager);
+}
+
 
 //This function should be called when LHS or RHS changes
 void OpAssign::UpdateStatementText()

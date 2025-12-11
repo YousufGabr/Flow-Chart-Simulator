@@ -37,5 +37,7 @@ public:
 	virtual void Edit(ApplicationManager* pManager);
 	virtual void Save(ofstream& OutFile);
 	virtual void Load(ifstream& InFile);
+	virtual void ValidateStat(ApplicationManager* pManager);
+	virtual void Simulate(ApplicationManager* pManager);
 };
 
