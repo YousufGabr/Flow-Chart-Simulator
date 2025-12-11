@@ -117,13 +117,11 @@ void VarAssign::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
-	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void VarAssign::Simulate(ApplicationManager* pManager)
 {
 	pManager->setVariable(LHS,pManager->getVarValue(RHS));
-	pOutConn->getDstStat()->Simulate(pManager);
 }
 
 

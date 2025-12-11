@@ -148,12 +148,11 @@ void OpAssign::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
-	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void OpAssign::Simulate(ApplicationManager* pManager)
 {
-	double result;
+	double result = 0;
 	if (IsValue(RHS1) && IsValue(RHS2))
 	{
 		if (Op == "+") result = stod(RHS1) + stod(RHS2);
@@ -183,7 +182,6 @@ void OpAssign::Simulate(ApplicationManager* pManager)
 		if (Op == "/") result = pManager->getVarValue(RHS1) / pManager->getVarValue(RHS2);
 	}
 	pManager->setVariable(LHS, result);
-	pOutConn->getDstStat()->Simulate(pManager);
 }
 
 

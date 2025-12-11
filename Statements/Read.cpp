@@ -99,7 +99,6 @@ void Read::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
-	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Read::Simulate(ApplicationManager* pManager)
@@ -108,7 +107,6 @@ void Read::Simulate(ApplicationManager* pManager)
 	Output* pOut = pManager->GetOutput();
 	double input = pIn->GetValue(pOut);
 	pManager->setVariable(Variable, input);
-	pOutConn->getDstStat()->Simulate(pManager);
 }
 
 

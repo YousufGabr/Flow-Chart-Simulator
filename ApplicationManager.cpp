@@ -514,18 +514,68 @@ void ApplicationManager::ValidateChart()
 		}
 			
 	}
+	Statement* pCurrentStat = nullptr;
+	Connector* pOutConn = nullptr;
 	for (int i = 0; i < StatCount; i++)
 	{
 		if (dynamic_cast<Start*>(StatList[i]))
 		{
-			StatList[i]->ValidateStat(this);
+			pCurrentStat = StatList[i];
 			break;
 		}
+	}
+	valid = true;
+	while (pCurrentStat != nullptr && valid) // Loop until you hit a terminal statement (no outgoing connector)
+	{
+		// 1. Execute the current statement's logic (e.g., assignment, input/output)
+		pCurrentStat->ValidateStat(this); // The Simulate function now ONLY performs its action
+
+		// 2. Determine the NEXT statement using the outgoing connector(s)
+		if (dynamic_cast<Condition*>(pCurrentStat))
+		{
+			Condition* c = dynamic_cast<Condition*>(pCurrentStat);
+			if (!c->getTcheck())
+			{
+				pOutConn = c->getTOutConn();
+				c->setTcheck(true);
+			}
+			else if (!c->getFcheck())
+			{
+				pOutConn = c->getFOutConn();
+				c->setFcheck(true);
+			}
+			else pOutConn = nullptr;
+
+		}
+		else if (dynamic_cast<End*>(pCurrentStat)) pOutConn = nullptr;
+		else pOutConn = pCurrentStat->getOutConnector();
+
+		// 3. Move to the next statement
+		if (pOutConn != nullptr)
+		{
+			pCurrentStat = pOutConn->getDstStat();
+		}
+		else
+		{
+			pCurrentStat = nullptr; // End of flow
+		}
+
 	}
 	for (int i = 0; i < MaxCount; i++)
 	{
 		varNames[i] = "";
 		varValues[i] = 0;
+	}
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Condition*>(StatList[i]))
+		{
+			Condition* d = dynamic_cast<Condition*>(StatList[i]);
+			d->setcondcheck(false);
+			d->setTcheck(false);
+			d->setFcheck(false);
+			break;
+		}
 	}
 }
 
@@ -542,11 +592,53 @@ void ApplicationManager::RunChart()
 	pAct->Execute();
 	delete pAct;
 	if (!valid) return;
+	Statement* pCurrentStat = nullptr;
+	Connector* pOutConn = nullptr;
 	for (int i = 0; i < StatCount; i++)
 	{
 		if (dynamic_cast<Start*>(StatList[i]))
 		{
-			StatList[i]->Simulate(this);
+			pCurrentStat = StatList[i];
+			break;
+		}
+	}
+	int iterations=0;
+	while (pCurrentStat != nullptr) // Loop until you hit a terminal statement (no outgoing connector)
+	{
+		// 1. Execute the current statement's logic (e.g., assignment, input/output)
+		pCurrentStat->Simulate(this); // The Simulate function now ONLY performs its action
+
+		// 2. Determine the NEXT statement using the outgoing connector(s)
+		if (dynamic_cast<Condition*>(pCurrentStat))
+		{
+			Condition* c = dynamic_cast<Condition*>(pCurrentStat);
+			if (c->getcondcheck())
+			{
+				pOutConn = c->getTOutConn();
+			}
+			else if (!c->getcondcheck())
+			{
+				pOutConn = c->getFOutConn();
+			}
+			else pOutConn = nullptr;
+
+		}
+		else if (dynamic_cast<End*>(pCurrentStat)) pOutConn = nullptr;
+		else pOutConn = pCurrentStat->getOutConnector();
+
+		// 3. Move to the next statement
+		if (pOutConn != nullptr)
+		{
+			pCurrentStat = pOutConn->getDstStat();
+		}
+		else
+		{
+			pCurrentStat = nullptr; // End of flow
+		}
+		iterations++;
+		if (iterations >= 1000)
+		{
+			pOut->PrintMessage("Error: Infinite Loop");
 			break;
 		}
 	}
@@ -555,7 +647,19 @@ void ApplicationManager::RunChart()
 		varNames[i] = "";
 		varValues[i] = 0;
 	}
-	pOut->PrintMessage("FlowChart Simulated Successfully!");
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Condition*>(StatList[i]))
+		{
+			Condition* d = dynamic_cast<Condition*>(StatList[i]);
+			d->setcondcheck(false);
+			d->setTcheck(false);
+			d->setFcheck(false);
+			break;
+		}
+	}
+	if (iterations < 1000) pOut->PrintMessage("FlowChart Simulated Successfully!");
+	Write::resetyaxis();
 }
 
 

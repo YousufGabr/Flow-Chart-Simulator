@@ -84,12 +84,10 @@ void Start::Load(ifstream& InFile)
 
 void Start::ValidateStat(ApplicationManager* pManager)
 {
-	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Start::Simulate(ApplicationManager* pManager)
 {
-	pOutConn->getDstStat()->Simulate(pManager);
 }
 
 void Start::UpdateStatementText() {}

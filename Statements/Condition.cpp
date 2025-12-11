@@ -7,6 +7,9 @@ Condition::Condition(Point Lcorner, string LeftHS, string Operator, string Right
 {
 	// Note: The LeftHS and RightHS should be validated inside (AddVarAssign) action
 	//       before passing it to the constructor of VarAssign
+	condcheck = false;
+	Tcheck = false;
+	Fcheck = false;
 	LHS = LeftHS;
 	RHS = RightHS;
 	Op = Operator;
@@ -36,6 +39,36 @@ void Condition::setRHS(const string& R)
 {
 	RHS = R;
 	UpdateStatementText();
+}
+
+void Condition::setcondcheck(bool c)
+{
+	condcheck = c;
+}
+
+bool Condition::getcondcheck()
+{
+	return condcheck;
+}
+
+void Condition::setTcheck(bool c)
+{
+	Tcheck = c;
+}
+
+bool Condition::getTcheck()
+{
+	return Tcheck;
+}
+
+void Condition::setFcheck(bool c)
+{
+	Fcheck = c;
+}
+
+bool Condition::getFcheck()
+{
+	return Fcheck;
 }
 
 
@@ -147,9 +180,6 @@ void Condition::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
-	TOutConn->getDstStat()->ValidateStat(pManager);
-	FOutConn->getDstStat()->ValidateStat(pManager);
-
 }
 
 void Condition::Simulate(ApplicationManager* pManager)
@@ -173,9 +203,7 @@ void Condition::Simulate(ApplicationManager* pManager)
 		if (Op == "<") check = pManager->getVarValue(LHS) < pManager->getVarValue(RHS);
 		if (Op == "<=") check = pManager->getVarValue(LHS) <= pManager->getVarValue(RHS);
 	}
-
-	if(check) TOutConn->getDstStat()->Simulate(pManager);
-	else FOutConn->getDstStat()->Simulate(pManager);
+	condcheck = check;
 
 }
 

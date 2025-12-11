@@ -5,6 +5,7 @@ class Write : public Statement
 
 private:
 	string Variable;	//Variable to be written
+	static int yaxis;
 
 	Connector* pOutConn;
 	Point Inlet;	//A point where connections enters this statement 
@@ -18,6 +19,7 @@ public:
 	Write(Point Lcorner, string Var="");
 
 	void setVar(const string& L);
+	static void resetyaxis();
 
 	virtual void Draw(Output* pOut) const;
 	virtual bool ifclicked(Point P) const;

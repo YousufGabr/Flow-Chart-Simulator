@@ -19,11 +19,17 @@ Write::Write(Point Lcorner, string Var)
 	Outlet.x = Inlet.x;
 	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
 }
+int Write::yaxis = 70;
 
 void Write::setVar(const string& V)
 {
 	Variable = V;
 	UpdateStatementText();
+}
+
+void Write::resetyaxis()
+{
+	yaxis = 70;
 }
 
 
@@ -100,14 +106,13 @@ void Write::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
-	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Write::Simulate(ApplicationManager* pManager)
 {
 	Output* pOut = pManager->GetOutput();
-	pOut->DrawString(UI.DrawingAreaWidth + 20, UI.ToolBarHeight + 20, Variable + "=" + doubleToString(pManager->getVarValue(Variable)));
-	pOutConn->getDstStat()->Simulate(pManager);
+	pOut->DrawString(UI.DrawingAreaWidth + 20, yaxis, Variable + "=" + doubleToString(pManager->getVarValue(Variable)));
+	yaxis += 20;
 }
 
 
