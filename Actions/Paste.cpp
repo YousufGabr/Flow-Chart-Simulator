@@ -49,6 +49,11 @@ void Paste::Execute() {
 		pOut->PrintMessage("No Copied/Cut Statement to Paste");
 		return;
 	}
+	if (p.y < UI.ToolBarHeight || p.y > UI.height - UI.StatusBarHeight || p.x > UI.DrawingAreaWidth)
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement here!");
+		return;
+	}
 	if (dynamic_cast <ValueAssign*>(copiedstat)) {
 		
 		newstat = new ValueAssign(Corner, LHS, DRHS);
