@@ -696,6 +696,7 @@ void ApplicationManager::DebugChart()
 			break;
 		}
 	}
+	if (pSelectedStat) pSelectedStat->SetSelected(false);
 
 	int iterations = 0;
 
@@ -771,7 +772,7 @@ void ApplicationManager::DebugChart()
 			d->setFcheck(false);
 		}
 	}
-
+	if (pSelectedStat) pSelectedStat->SetSelected(true);
 	outputyaxis = 70;
 	pOut->PrintMessage("Debugging Finished");
 }

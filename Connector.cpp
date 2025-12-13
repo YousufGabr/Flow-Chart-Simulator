@@ -65,9 +65,16 @@ bool Connector::ifclicked(Point P) const
 	// Case 1 : vertical line Downward Connector
 	if (Start.y < End.y)
 	{
+		if (P.x < min(Start.x, End.x) - 5 ||
+			P.x > max(Start.x, End.x) + 5 ||
+			P.y < min(Start.y, End.y) - 5 ||
+			P.y > max(Start.y, End.y) + 5)
+			return false;
+
 		double A = End.y - Start.y;
 		double B = Start.x - End.x;
 		double C = End.x * Start.y - Start.x * End.y;
+
 		double distance = abs(A * P.x + B * P.y + C) / sqrt(A * A + B * B);
 		return distance <= 5;
 	}
