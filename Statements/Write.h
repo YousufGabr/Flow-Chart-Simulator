@@ -5,7 +5,6 @@ class Write : public Statement
 
 private:
 	string input;	//Variable to be written
-	static int yaxis;
 	bool IsMSG;
 
 	Connector* pOutConn;

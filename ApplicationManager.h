@@ -20,6 +20,7 @@ class ApplicationManager
 private:
 	int StatCount;		//Actual number of statements
 	int ConnCount;		//Actual number of connectors
+	static int outputyaxis;
 	bool iscut;	 //flag to check if the operation is cut
 	bool valid;
 	string varNames[MaxCount];   // variable names
@@ -41,6 +42,8 @@ private:
 public:	
 	ApplicationManager(); 
 	~ApplicationManager();
+	int getyaxis();
+	void incyaxis();
 	
 	// == Actions Related Functions ==
 	ActionType GetUserAction() const; //Reads the input command from the user 
@@ -72,6 +75,8 @@ public:
 	void ValidateChart();
 	void setvalid(bool v);
 	void RunChart();
+	void DebugChart();
+	void DisplayVariables();
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)

@@ -20,7 +20,6 @@ Write::Write(Point Lcorner, string Var)
 	Outlet.x = Inlet.x;
 	Outlet.y = LeftCorner.y + UI.ASSGN_HI;
 }
-int Write::yaxis = 70;
 
 void Write::setVar(const string& V)
 {
@@ -37,12 +36,6 @@ bool Write::getMSG()
 {
 	return IsMSG;
 }
-
-void Write::resetyaxis()
-{
-	yaxis = 70;
-}
-
 
 void Write::Draw(Output* pOut) const
 {
@@ -143,9 +136,9 @@ void Write::ValidateStat(ApplicationManager* pManager)
 void Write::Simulate(ApplicationManager* pManager)
 {
 	Output* pOut = pManager->GetOutput();
-	if(!IsMSG) pOut->DrawString(UI.DrawingAreaWidth + 20, yaxis, input + "=" + doubleToString(pManager->getVarValue(input)));
-	else pOut->DrawString(UI.DrawingAreaWidth + 20, yaxis, input);
-	yaxis += 20;
+	if(!IsMSG) pOut->DrawString(UI.DrawingAreaWidth + 20, pManager->getyaxis(), "Output: " + input + "=" + doubleToString(pManager->getVarValue(input)));
+	else pOut->DrawString(UI.DrawingAreaWidth + 20, pManager->getyaxis(), input);
+	pManager->incyaxis();
 }
 
 

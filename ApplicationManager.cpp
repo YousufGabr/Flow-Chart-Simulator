@@ -19,6 +19,7 @@
 #include "Actions\Load.h"
 #include "Actions\Validate.h"
 #include "Actions\Run.h"
+#include "Actions\Debug.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -46,6 +47,15 @@ ApplicationManager::ApplicationManager()
 		varNames[i] = "";
 		varValues[i] = 0;
 	}
+}
+int ApplicationManager::outputyaxis = 70;
+int ApplicationManager::getyaxis()
+{
+	return outputyaxis;
+}
+void ApplicationManager::incyaxis()
+{
+	outputyaxis+=20;
 }
 
 
@@ -193,7 +203,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case DEBUG:
-			pOut->PrintMessage("Action: DEBUG the flowchart");
+			pAct = new Debug(this);
 			break;
 
 		case GENERATE:
@@ -638,7 +648,7 @@ void ApplicationManager::RunChart()
 		iterations++;
 		if (iterations >= 1000)
 		{
-			pOut->PrintMessage("Error: Infinite Loop");
+			pOut->PrintMessage("Error: Infinite Loop detected during Running");
 			break;
 		}
 	}
@@ -659,7 +669,133 @@ void ApplicationManager::RunChart()
 		}
 	}
 	if (iterations < 1000) pOut->PrintMessage("FlowChart Simulated Successfully!");
-	Write::resetyaxis();
+	outputyaxis = 70;
+}
+
+void ApplicationManager::DebugChart()
+{
+	// Validate before debugging
+	pOut->ClearOutputBar();
+	Action* pAct = new Validate(this);
+	pAct->Execute();
+	delete pAct;
+
+	if (!valid) return;
+
+	Statement* pCurrentStat = nullptr;
+	Statement* pPrevStat = nullptr;
+	Connector* pOutConn = nullptr;
+	Point p;
+
+	// Find Start
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Start*>(StatList[i]))
+		{
+			pCurrentStat = StatList[i];
+			break;
+		}
+	}
+
+	int iterations = 0;
+
+	while (pCurrentStat != nullptr)
+	{
+		// 1️ Unhighlight previous
+		if (pPrevStat)
+			pPrevStat->SetSelected(false);
+
+		// 2️ Highlight current
+		pCurrentStat->SetSelected(true);
+		UpdateInterface();   // redraw to show highlight
+
+		// 3️ Pause for user (Next Step)
+		pOut->PrintMessage("Debugging... Click for next step");
+		pIn->GetPointClicked(p);   // or GetString(), depending on your UI
+
+		// 4️ Execute current statement
+		pCurrentStat->Simulate(this);
+
+		// 5️ Display variables
+		DisplayVariables();
+
+		// 6️ Determine next statement
+		if (dynamic_cast<Condition*>(pCurrentStat))
+		{
+			Condition* c = dynamic_cast<Condition*>(pCurrentStat);
+			if (c->getcondcheck())
+				pOutConn = c->getTOutConn();
+			else
+				pOutConn = c->getFOutConn();
+		}
+		else if (dynamic_cast<End*>(pCurrentStat))
+		{
+			pOutConn = nullptr;
+		}
+		else
+		{
+			pOutConn = pCurrentStat->getOutConnector();
+		}
+
+		// 7️ Move forward
+		pPrevStat = pCurrentStat;
+		if (pOutConn) pCurrentStat = pOutConn->getDstStat();
+		else pCurrentStat = nullptr;
+
+		iterations++;
+		if (iterations >= 1000)
+		{
+			pOut->PrintMessage("Error: Infinite Loop detected during debugging");
+			break;
+		}
+	}
+
+	// Cleanup highlights
+	if (pPrevStat) pPrevStat->SetSelected(false);
+
+	// Reset variables
+	for (int i = 0; i < MaxCount; i++)
+	{
+		varNames[i] = "";
+		varValues[i] = 0;
+	}
+
+	// Reset condition flags
+	for (int i = 0; i < StatCount; i++)
+	{
+		if (dynamic_cast<Condition*>(StatList[i]))
+		{
+			Condition* d = dynamic_cast<Condition*>(StatList[i]);
+			d->setcondcheck(false);
+			d->setTcheck(false);
+			d->setFcheck(false);
+		}
+	}
+
+	outputyaxis = 70;
+	pOut->PrintMessage("Debugging Finished");
+}
+
+void ApplicationManager::DisplayVariables()
+{
+	string varsLine = "";
+
+	for (int i = 0; i < MaxCount; i++)
+	{
+		if (varNames[i] != "")
+		{
+			if (!varsLine.empty())
+				varsLine += " | ";
+
+			varsLine += varNames[i] + "=" + doubleToString(varValues[i]);
+		}
+	}
+
+	if (varsLine.empty()) return;
+
+	//pOut->ClearOutputBar();
+	pOut->DrawString(UI.DrawingAreaWidth + 20, outputyaxis, varsLine);
+	incyaxis();
 }
 
 

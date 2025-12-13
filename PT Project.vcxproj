@@ -135,6 +135,7 @@
     <ClCompile Include="Actions\AddWrite.cpp" />
     <ClCompile Include="Actions\Copy.cpp" />
     <ClCompile Include="Actions\Cut.cpp" />
+    <ClCompile Include="Actions\Debug.cpp" />
     <ClCompile Include="Actions\Delete.cpp" />
     <ClCompile Include="Actions\Edit.cpp" />
     <ClCompile Include="Actions\Load.cpp" />
@@ -320,6 +321,7 @@
     <ClInclude Include="Actions\AddWrite.h" />
     <ClInclude Include="Actions\Copy.h" />
     <ClInclude Include="Actions\Cut.h" />
+    <ClInclude Include="Actions\Debug.h" />
     <ClInclude Include="Actions\Delete.h" />
     <ClInclude Include="Actions\Edit.h" />
     <ClInclude Include="Actions\Load.h" />
