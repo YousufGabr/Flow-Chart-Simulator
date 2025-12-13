@@ -92,8 +92,11 @@ void Paste::Execute() {
 		newstat = new Read(Corner, SRHS);
 	}
 	else if (dynamic_cast <Write*>(copiedstat)) {
-		
+
+		Write* old = dynamic_cast <Write*>(copiedstat);
 		newstat = new Write(Corner, SRHS);
+		Write* n = dynamic_cast <Write*>(newstat);
+		n->setMSG(old->getMSG());
 	}
 	else if (dynamic_cast <Declare*>(copiedstat)) {
 		

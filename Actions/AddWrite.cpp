@@ -26,8 +26,22 @@ void AddWrite::ReadActionParameters()
 		pOut->PrintMessage("Aborted: Cannot place statement here!");
 		return;
 	}
-	pOut->ClearStatusBar();
-	Variable = pIn->GetVariable(pOut);
+	pOut->PrintMessage("Enter a Variable or Message");
+	do {
+		input = pIn->GetString(pOut);
+		if (input.front() == '"' && input.back() == '"')
+		{
+			ismsg = true;
+			break;
+		}
+		else if (IsVariable(input))
+		{
+			ismsg = false;
+			break;
+		}
+		pOut->PrintMessage("invalid Input, try again:");
+	} while (true);
+	
 	pOut->ClearStatusBar();
 }
 
@@ -42,7 +56,8 @@ void AddWrite::Execute()
 	Corner.x = Position.x - UI.ASSGN_WDTH / 2;
 	Corner.y = Position.y;
 
-	Write* pAssign = new Write(Corner, Variable);
+	Write* pAssign = new Write(Corner, input);
+	pAssign->setMSG(ismsg);
 
 	pManager->AddStatement(pAssign); // Adds the created statement to application manger's statement list
 }

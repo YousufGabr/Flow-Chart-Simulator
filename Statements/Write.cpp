@@ -5,7 +5,8 @@ using namespace std;
 
 Write::Write(Point Lcorner, string Var)
 {
-	Variable = Var;
+	input = Var;
+	IsMSG = true;
 
 	UpdateStatementText();
 
@@ -23,8 +24,18 @@ int Write::yaxis = 70;
 
 void Write::setVar(const string& V)
 {
-	Variable = V;
+	input = V;
 	UpdateStatementText();
+}
+
+void Write::setMSG(bool m)
+{
+	IsMSG = m;
+}
+
+bool Write::getMSG()
+{
+	return IsMSG;
 }
 
 void Write::resetyaxis()
@@ -69,27 +80,48 @@ Connector* Write::getOutConnector() const
 
 void Write::getdata(string& lhs, string& op, string& srhs, double& drhs, string& srhs2)
 {
-	srhs = Variable;
+	srhs = input;
 }
 
 void Write::Edit(ApplicationManager* pManager)
 {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-	Variable = pIn->GetVariable(pOut);
+	pOut->PrintMessage("Enter a Variable or Message");
+	do {
+		input = pIn->GetString(pOut);
+		if (input.front() == '"' && input.back() == '"')
+		{
+			IsMSG = true;
+			break;
+		}
+		else if (IsVariable(input))
+		{
+			IsMSG = false;
+			break;
+		}
+		pOut->PrintMessage("invalid Input, try again:");
+	} while (true);
 	pOut->ClearStatusBar();
 	UpdateStatementText();
 }
 
 void Write::Save(ofstream& OutFile)
 {
-	OutFile << "WRITE "<< ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << Variable << endl;
+	OutFile << "WRITE "<< ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << input << endl;
 }
 
 void Write:: Load(ifstream& InFile)
 {
-	InFile >> ID >> LeftCorner.x >> LeftCorner.y >> Variable;
-	
+	InFile >> ID >> LeftCorner.x >> LeftCorner.y;
+	InFile.ignore();
+	getline(InFile, input);
+	if (input.front() == '"' && input.back() == '"')
+	{
+		IsMSG = true;
+	}
+	else IsMSG = false;
+
 	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Inlet.y = LeftCorner.y;
 	Outlet.x = Inlet.x;
@@ -100,9 +132,9 @@ void Write:: Load(ifstream& InFile)
 void Write::ValidateStat(ApplicationManager* pManager)
 {
 	Output* pOut = pManager->GetOutput();
-	if (pManager->findVariable(Variable) == -1)
+	if (pManager->findVariable(input) == -1 && !IsMSG)
 	{
-		pOut->PrintMessage("Error: Variable (" + Variable + ") Not Declared");
+		pOut->PrintMessage("Error: Variable (" + input + ") Not Declared");
 		pManager->setvalid(false);
 		return;
 	}
@@ -111,7 +143,8 @@ void Write::ValidateStat(ApplicationManager* pManager)
 void Write::Simulate(ApplicationManager* pManager)
 {
 	Output* pOut = pManager->GetOutput();
-	pOut->DrawString(UI.DrawingAreaWidth + 20, yaxis, Variable + "=" + doubleToString(pManager->getVarValue(Variable)));
+	if(!IsMSG) pOut->DrawString(UI.DrawingAreaWidth + 20, yaxis, input + "=" + doubleToString(pManager->getVarValue(input)));
+	else pOut->DrawString(UI.DrawingAreaWidth + 20, yaxis, input);
 	yaxis += 20;
 }
 
@@ -120,6 +153,6 @@ void Write::Simulate(ApplicationManager* pManager)
 void Write::UpdateStatementText()
 {
 	ostringstream T;
-	T << "Write " << Variable;
+	T << "Write " << input;
 	Text = T.str();
 }

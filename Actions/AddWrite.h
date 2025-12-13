@@ -9,7 +9,8 @@ private:
 	// to be set in ReadActionParameters() then used in Execute()
 
 	Point Position;	//Position where the user clicks to add the stat.
-	string Variable;	//Variable to be written
+	string input;	//Variable to be written
+	bool ismsg;
 
 public:
 	AddWrite(ApplicationManager* pAppManager);
