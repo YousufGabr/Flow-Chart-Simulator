@@ -127,6 +127,9 @@ void Load::Execute() {
 		}
 	}
 	pManager->ArrangeStatementIDs();
+	pManager->SetSelectedStatement(nullptr);
+	pManager->SetSelectedConnector(nullptr);
+	pManager->SetClipboard(nullptr);
 }
 
 
