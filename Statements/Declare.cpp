@@ -94,7 +94,9 @@ void Declare::Load(ifstream& InFile)
 
 void Declare::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	pManager->addVariable(Variable, 0);
+	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Declare::Simulate(ApplicationManager* pManager)

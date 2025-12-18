@@ -106,6 +106,7 @@ void ValueAssign::Load(ifstream& InFile)
 
 void ValueAssign::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	if (pManager->findVariable(LHS) == -1)
 	{
@@ -113,6 +114,7 @@ void ValueAssign::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void ValueAssign::Simulate(ApplicationManager* pManager)

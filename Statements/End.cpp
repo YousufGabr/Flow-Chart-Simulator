@@ -74,6 +74,7 @@ void End::Load(ifstream& InFile)
 
 void End::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("FlowChart is Valid!");
 	pManager->setvalid(true);

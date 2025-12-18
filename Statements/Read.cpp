@@ -92,6 +92,7 @@ void Read::Load(ifstream& InFile)
 
 void Read::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	if (pManager->findVariable(Variable) == -1)
 	{
@@ -99,6 +100,7 @@ void Read::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Read::Simulate(ApplicationManager* pManager)

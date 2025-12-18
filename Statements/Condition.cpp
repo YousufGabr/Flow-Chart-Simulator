@@ -156,6 +156,7 @@ void Condition::Load(ifstream& InFile)
 
 void Condition::ValidateStat(ApplicationManager* pManager)
 {
+	if (visited || !pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	if (pManager->findVariable(LHS) == -1)
 	{
@@ -169,6 +170,10 @@ void Condition::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
+	visited = true;
+	TOutConn->getDstStat()->ValidateStat(pManager);
+	//if (!pManager->getvalid()) return;
+	FOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Condition::Simulate(ApplicationManager* pManager)

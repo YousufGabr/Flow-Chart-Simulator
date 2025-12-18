@@ -74,6 +74,7 @@ public:
 	void ArrangeStatementIDs(); //Rearranges the statement IDs after loading a flowchart from a file
 	void ValidateChart();
 	void setvalid(bool v);
+	bool getvalid();
 	void RunChart();
 	void DebugChart();
 	void DisplayVariables();

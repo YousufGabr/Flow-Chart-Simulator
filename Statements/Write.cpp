@@ -124,6 +124,7 @@ void Write:: Load(ifstream& InFile)
 
 void Write::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	if (pManager->findVariable(input) == -1 && !IsMSG)
 	{
@@ -131,6 +132,7 @@ void Write::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void Write::Simulate(ApplicationManager* pManager)

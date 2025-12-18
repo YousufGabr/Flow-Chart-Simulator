@@ -123,6 +123,7 @@ void OpAssign::Load(ifstream& InFile)
 
 void OpAssign::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	if (pManager->findVariable(LHS) == -1)
 	{
@@ -148,6 +149,7 @@ void OpAssign::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void OpAssign::Simulate(ApplicationManager* pManager)

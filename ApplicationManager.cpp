@@ -147,11 +147,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 			// --- UNDO / REDO ---
 		case UNDO:
-			pOut->PrintMessage("Action: UNDO last action");
+			pOut->PrintMessage("UNDO last action");
 			break;
 
 		case REDO:
-			pOut->PrintMessage("Action: REDO last undone action");
+			pOut->PrintMessage("REDO last undone action");
 			break;
 
 			// --- FILE OPERATIONS ---
@@ -166,18 +166,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 			// --- MODE SWITCHING ---
 		case SWITCH_SIM_MODE:
-			pOut->PrintMessage("Action: Switch to SIMULATION Mode, creating Simulation Tool Bar");
+			pOut->PrintMessage("Switch to SIMULATION Mode");
 			pOut->CreateSimulationToolBar();
 			break;
 
 		case SWITCH_DSN_MODE:
-			pOut->PrintMessage("Action: Switch to DESIGN Mode, creating Design Tool Bar");
+			pOut->PrintMessage("Switch to DESIGN Mode");
 			pOut->CreateDesignToolBar();
 			break;
 
 
 			// --- CLICK AREAS ---
-		case DRAWING_AREA:
+		/*case DRAWING_AREA:
 			pOut->PrintMessage("Action: Click on the DRAWING area");
 			break;
 
@@ -189,9 +189,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pOut->PrintMessage("Action: Click on the DESIGN Tool Bar");
 			break;
 
+		case SIM_TOOL:
+			pOut->PrintMessage("Action: Click on the SIMULATION Tool Bar");
+			break;
+
 		case STATUS:
 			pOut->PrintMessage("Action: Click on the STATUS Bar");
-			break;
+			break;*/
 
 			// --- SIMULATION ACTIONS ---
 		case VALIDATE:
@@ -207,11 +211,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case GENERATE:
-			pOut->PrintMessage("Action: GENERATE the flowchart code");
-			break;
-
-		case SIM_TOOL:
-			pOut->PrintMessage("Action: Click on the SIMULATION Tool Bar");
+			pOut->PrintMessage("GENERATE the flowchart code");
 			break;
 
 		case EXIT:
@@ -534,37 +534,8 @@ void ApplicationManager::ValidateChart()
 		}
 	}
 	valid = true;
-	Connector* pOutConn = pCurrentStat->getOutConnector();
-	Connector* fconn = nullptr;
-	while (pOutConn != nullptr && valid) // Loop until you hit a terminal statement (no outgoing connector)
-	{
-		pCurrentStat = pOutConn->getDstStat();
-		// 1. Execute the current statement's logic (e.g., assignment, input/output)
-		pCurrentStat->ValidateStat(this); // The Simulate function now ONLY performs its action
+	pCurrentStat->ValidateStat(this);
 
-		// 2. Determine the NEXT statement using the outgoing connector(s)
-		if (dynamic_cast<Condition*>(pCurrentStat))
-		{
-			Condition* c = dynamic_cast<Condition*>(pCurrentStat);
-			if (!c->getvisited())
-			{
-				pOutConn = c->getTOutConn();
-				fconn = c->getFOutConn();
-				c->setvisited(true);
-			}
-			else pOutConn = nullptr;
-
-		}
-		else if (dynamic_cast<End*>(pCurrentStat)) pOutConn = nullptr;
-		else pOutConn = pCurrentStat->getOutConnector();
-	}
-	while (fconn != nullptr && valid)
-	{
-		pCurrentStat = fconn->getDstStat();
-		pCurrentStat->ValidateStat(this);
-		if (dynamic_cast<End*>(pCurrentStat)) fconn = nullptr;
-		else fconn = pCurrentStat->getOutConnector();
-	}
 	for (int i = 0; i < MaxCount; i++)
 	{
 		varNames[i] = "";
@@ -577,7 +548,6 @@ void ApplicationManager::ValidateChart()
 			Condition* d = dynamic_cast<Condition*>(StatList[i]);
 			d->setcondcheck(false);
 			d->setvisited(false);
-			break;
 		}
 	}
 }
@@ -585,6 +555,10 @@ void ApplicationManager::ValidateChart()
 void ApplicationManager::setvalid(bool v)
 {
 	valid = v;
+}
+bool ApplicationManager::getvalid()
+{
+	return valid;
 }
 
 void ApplicationManager::RunChart()
@@ -657,7 +631,6 @@ void ApplicationManager::RunChart()
 			Condition* d = dynamic_cast<Condition*>(StatList[i]);
 			d->setcondcheck(false);
 			d->setvisited(false);
-			break;
 		}
 	}
 	if (iterations < 1000) pOut->PrintMessage("FlowChart Simulated Successfully!");

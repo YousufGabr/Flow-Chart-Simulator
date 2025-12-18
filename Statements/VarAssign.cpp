@@ -104,6 +104,7 @@ void VarAssign::Load(ifstream& InFile)
 
 void VarAssign::ValidateStat(ApplicationManager* pManager)
 {
+	if (!pManager->getvalid()) return;
 	Output* pOut = pManager->GetOutput();
 	if (pManager->findVariable(LHS) == -1)
 	{
@@ -117,6 +118,7 @@ void VarAssign::ValidateStat(ApplicationManager* pManager)
 		pManager->setvalid(false);
 		return;
 	}
+	pOutConn->getDstStat()->ValidateStat(pManager);
 }
 
 void VarAssign::Simulate(ApplicationManager* pManager)
