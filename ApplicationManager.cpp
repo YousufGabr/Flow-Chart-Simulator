@@ -704,7 +704,7 @@ void ApplicationManager::DebugChart()
 
 		// 3️ Pause for user (Next Step)
 		pOut->PrintMessage("Debugging... Click for next step");
-		pIn->GetPointClicked(p);   // or GetString(), depending on your UI
+		pIn->GetPointClicked(p);
 
 		// 4️ Execute current statement
 		pCurrentStat->Simulate(this);
@@ -785,7 +785,6 @@ void ApplicationManager::DisplayVariables()
 
 	if (varsLine.empty()) return;
 
-	//pOut->ClearOutputBar();
 	pOut->DrawString(UI.DrawingAreaWidth + 20, outputyaxis, varsLine);
 	incyaxis();
 }
