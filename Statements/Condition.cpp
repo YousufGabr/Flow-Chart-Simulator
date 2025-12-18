@@ -8,8 +8,7 @@ Condition::Condition(Point Lcorner, string LeftHS, string Operator, string Right
 	// Note: The LeftHS and RightHS should be validated inside (AddVarAssign) action
 	//       before passing it to the constructor of VarAssign
 	condcheck = false;
-	Tcheck = false;
-	Fcheck = false;
+	visited = false;
 	LHS = LeftHS;
 	RHS = RightHS;
 	Op = Operator;
@@ -51,24 +50,14 @@ bool Condition::getcondcheck()
 	return condcheck;
 }
 
-void Condition::setTcheck(bool c)
+void Condition::setvisited(bool c)
 {
-	Tcheck = c;
+	visited = c;
 }
 
-bool Condition::getTcheck()
+bool Condition::getvisited()
 {
-	return Tcheck;
-}
-
-void Condition::setFcheck(bool c)
-{
-	Fcheck = c;
-}
-
-bool Condition::getFcheck()
-{
-	return Fcheck;
+	return visited;
 }
 
 

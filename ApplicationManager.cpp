@@ -525,7 +525,6 @@ void ApplicationManager::ValidateChart()
 			
 	}
 	Statement* pCurrentStat = nullptr;
-	Connector* pOutConn = nullptr;
 	for (int i = 0; i < StatCount; i++)
 	{
 		if (dynamic_cast<Start*>(StatList[i]))
@@ -535,8 +534,11 @@ void ApplicationManager::ValidateChart()
 		}
 	}
 	valid = true;
-	while (pCurrentStat != nullptr && valid) // Loop until you hit a terminal statement (no outgoing connector)
+	Connector* pOutConn = pCurrentStat->getOutConnector();
+	Connector* fconn = nullptr;
+	while (pOutConn != nullptr && valid) // Loop until you hit a terminal statement (no outgoing connector)
 	{
+		pCurrentStat = pOutConn->getDstStat();
 		// 1. Execute the current statement's logic (e.g., assignment, input/output)
 		pCurrentStat->ValidateStat(this); // The Simulate function now ONLY performs its action
 
@@ -544,32 +546,24 @@ void ApplicationManager::ValidateChart()
 		if (dynamic_cast<Condition*>(pCurrentStat))
 		{
 			Condition* c = dynamic_cast<Condition*>(pCurrentStat);
-			if (!c->getTcheck())
+			if (!c->getvisited())
 			{
 				pOutConn = c->getTOutConn();
-				c->setTcheck(true);
-			}
-			else if (!c->getFcheck())
-			{
-				pOutConn = c->getFOutConn();
-				c->setFcheck(true);
+				fconn = c->getFOutConn();
+				c->setvisited(true);
 			}
 			else pOutConn = nullptr;
 
 		}
 		else if (dynamic_cast<End*>(pCurrentStat)) pOutConn = nullptr;
 		else pOutConn = pCurrentStat->getOutConnector();
-
-		// 3. Move to the next statement
-		if (pOutConn != nullptr)
-		{
-			pCurrentStat = pOutConn->getDstStat();
-		}
-		else
-		{
-			pCurrentStat = nullptr; // End of flow
-		}
-
+	}
+	while (fconn != nullptr && valid)
+	{
+		pCurrentStat = fconn->getDstStat();
+		pCurrentStat->ValidateStat(this);
+		if (dynamic_cast<End*>(pCurrentStat)) fconn = nullptr;
+		else fconn = pCurrentStat->getOutConnector();
 	}
 	for (int i = 0; i < MaxCount; i++)
 	{
@@ -582,8 +576,7 @@ void ApplicationManager::ValidateChart()
 		{
 			Condition* d = dynamic_cast<Condition*>(StatList[i]);
 			d->setcondcheck(false);
-			d->setTcheck(false);
-			d->setFcheck(false);
+			d->setvisited(false);
 			break;
 		}
 	}
@@ -663,8 +656,7 @@ void ApplicationManager::RunChart()
 		{
 			Condition* d = dynamic_cast<Condition*>(StatList[i]);
 			d->setcondcheck(false);
-			d->setTcheck(false);
-			d->setFcheck(false);
+			d->setvisited(false);
 			break;
 		}
 	}
@@ -768,8 +760,7 @@ void ApplicationManager::DebugChart()
 		{
 			Condition* d = dynamic_cast<Condition*>(StatList[i]);
 			d->setcondcheck(false);
-			d->setTcheck(false);
-			d->setFcheck(false);
+			d->setvisited(false);
 		}
 	}
 	if (pSelectedStat) pSelectedStat->SetSelected(true);

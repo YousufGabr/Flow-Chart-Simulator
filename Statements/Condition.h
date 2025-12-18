@@ -3,7 +3,7 @@
 class Condition : public Statement
 {
 private:
-	bool condcheck, Tcheck, Fcheck;
+	bool condcheck, visited;
 	string LHS;	//Left Handside of the assignment (name of a variable)
 	string Op;    //Operator
 	string RHS;  //Second Right Handside (Value)
@@ -25,10 +25,8 @@ public:
 	void setRHS(const string& R);
 	void setcondcheck(bool c);
 	bool getcondcheck();
-	void setTcheck(bool c);
-	bool getTcheck();
-	void setFcheck(bool c);
-	bool getFcheck();
+	void setvisited(bool c);
+	bool getvisited();
 
 	virtual void Draw(Output* pOut) const;
 	virtual bool ifclicked(Point P) const;
