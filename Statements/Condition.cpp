@@ -172,7 +172,6 @@ void Condition::ValidateStat(ApplicationManager* pManager)
 	}
 	visited = true;
 	TOutConn->getDstStat()->ValidateStat(pManager);
-	//if (!pManager->getvalid()) return;
 	FOutConn->getDstStat()->ValidateStat(pManager);
 }
 
