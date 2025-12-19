@@ -54,6 +54,11 @@ void Paste::Execute() {
 		pOut->PrintMessage("Aborted: Cannot place statement here!");
 		return;
 	}
+	if (pManager->GetStatement(p))
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement on another statement!");
+		return;
+	}
 	if (dynamic_cast <ValueAssign*>(copiedstat)) {
 		
 		newstat = new ValueAssign(Corner, LHS, DRHS);
