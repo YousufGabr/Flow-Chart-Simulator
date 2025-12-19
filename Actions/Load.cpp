@@ -130,6 +130,7 @@ void Load::Execute() {
 	pManager->SetSelectedStatement(nullptr);
 	pManager->SetSelectedConnector(nullptr);
 	pManager->SetClipboard(nullptr);
+	pOut->PrintMessage(filename + " Loaded Successfully");
 }
 
 
