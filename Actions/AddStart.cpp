@@ -31,6 +31,11 @@ void AddStart::ReadActionParameters()
 		pOut->PrintMessage("Aborted: Cannot place statement here!");
 		return;
 	}
+	if (pManager->GetStatement(Position))
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement on another statement!");
+		return;
+	}
 	pOut->ClearStatusBar();
 }
 
@@ -38,8 +43,7 @@ void AddStart::Execute()
 {
 	ReadActionParameters();
 	if (Start::getExists()) return;
-	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
-
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth || pManager->GetStatement(Position)) return;
 	if (pManager->getIscut())
 	{
 		if (dynamic_cast<Start*>(pManager->GetClipboard()))

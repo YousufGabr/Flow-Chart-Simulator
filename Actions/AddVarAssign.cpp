@@ -26,6 +26,11 @@ void AddVarAssign::ReadActionParameters()
 		pOut->PrintMessage("Aborted: Cannot place statement here!");
 		return;
 	}
+	if (pManager->GetStatement(Position))
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement on another statement!");
+		return;
+	}
 	pOut->ClearStatusBar();
 	LHS = pIn->GetVariable(pOut);
 	RHS = pIn->GetVariable(pOut);
@@ -39,8 +44,7 @@ void AddVarAssign::ReadActionParameters()
 void AddVarAssign::Execute()
 {
 	ReadActionParameters();
-	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
-
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth || pManager->GetStatement(Position)) return;
 
 	//Calculating left corner of assignement statement block
 	Point Corner;

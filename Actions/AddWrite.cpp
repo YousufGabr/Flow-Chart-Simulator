@@ -26,6 +26,11 @@ void AddWrite::ReadActionParameters()
 		pOut->PrintMessage("Aborted: Cannot place statement here!");
 		return;
 	}
+	if (pManager->GetStatement(Position))
+	{
+		pOut->PrintMessage("Aborted: Cannot place statement on another statement!");
+		return;
+	}
 	pOut->PrintMessage("Enter a Variable or Message");
 	do {
 		input = pIn->GetString(pOut);
@@ -48,8 +53,7 @@ void AddWrite::ReadActionParameters()
 void AddWrite::Execute()
 {
 	ReadActionParameters();
-	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth) return;
-
+	if (Position.y < UI.ToolBarHeight || Position.y > UI.height - UI.StatusBarHeight || Position.x > UI.DrawingAreaWidth || pManager->GetStatement(Position)) return;
 
 	//Calculating left corner of Write statement block
 	Point Corner;
