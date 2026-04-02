@@ -143,14 +143,3 @@ Example diagram:
 - LinkedIn: https://www.linkedin.com/in/yousufgabr/
 
 ---
-
-## ⭐ Notes
-
-- Undo/Redo and C++ code generation were part of optional features but are not implemented.
-- The project strictly follows OOP principles including encapsulation, inheritance, and polymorphism.
-
----
-
-## ⭐ Support
-
-If you like this project, give it a star ⭐
